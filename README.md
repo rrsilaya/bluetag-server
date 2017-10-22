@@ -13,6 +13,7 @@
 ### Installation
 1. Clone this repository.
 2. Install all the dependencies by running `yarn install`.
+3. Run `yarn seed` to populate with data. You will be prompted twice for your password.
 3. Run the server using `yarn start`.
 
 ### Developers

@@ -18,7 +18,7 @@
   "scripts": {
     "start": "backpack",
     "build": "backpack build",
-    "seed": "mysql -u root -p < ./src/database/schema.sql",
+    "seed": "mysql -u root -p < ./src/database/schema.sql && mysql -u root -p < ./src/database/seed.sql",
     "precommit": "lint-staged",
     "prettify": "prettier --tab-width 2 --single-quote --jsx-bracket-same-line --write ./src/**/*.js"
   },
