@@ -29,7 +29,7 @@ CREATE TABLE employee (
 );
 
 CREATE TABLE log (
-  `id` VARCHAR(16) NOT NULL,
+  `id` VARCHAR(17) NOT NULL,
   `timestamp` TIMESTAMP NOT NULL,
   `action` VARCHAR(30) NOT NULL,
   `employee` VARCHAR(10) NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE log (
 );
 
 CREATE TABLE orderRequest (
-  `id` VARCHAR(16) NOT NULL,
+  `id` VARCHAR(17) NOT NULL,
   `timestamp` TIMESTAMP NOT NULL,
   `status` ENUM(
     'pending',
@@ -62,7 +62,7 @@ CREATE TABLE orderRequestItem (
   `id` INT NOT NULL AUTO_INCREMENT,
   `item` VARCHAR(30) NOT NULL,
   `qty` INT DEFAULT 1 NOT NULL,
-  `request` VARCHAR(16) NOT NULL,
+  `request` VARCHAR(17) NOT NULL,
 
   CONSTRAINT `orderRequestItem_id_pk`
     PRIMARY KEY(`id`),
@@ -72,7 +72,7 @@ CREATE TABLE orderRequestItem (
 );
 
 CREATE TABLE apparel (
-  `id` VARCHAR(16) NOT NULL,
+  `id` VARCHAR(17) NOT NULL,
   `type` VARCHAR(30) NOT NULL,
   `size` VARCHAR(10) NOT NULL,
   `color` VARCHAR(20),
@@ -93,7 +93,7 @@ CREATE TABLE discount (
   `date` DATE NOT NULL,
   `rate` INT NOT NULL,
   `isActive` BOOLEAN DEFAULT true NOT NULL,
-  `apparel` VARCHAR(16) NOT NULL,
+  `apparel` VARCHAR(17) NOT NULL,
   `employee` VARCHAR(10) NOT NULL,
 
   CONSTRAINT `discount_id_pk`
@@ -110,7 +110,7 @@ CREATE TABLE sale (
   `id` INT NOT NULL AUTO_INCREMENT,
   `date` DATE NOT NULL,
   `qty` INT DEFAULT 1 NOT NULL,
-  `apparel` VARCHAR(16) NOT NULL,
+  `apparel` VARCHAR(17) NOT NULL,
   `employee` VARCHAR(10) NOT NULL,
 
   CONSTRAINT `sale_id_pk`
