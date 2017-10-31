@@ -88,6 +88,7 @@ CREATE TABLE stock (
   `qty` INT DEFAULT 1 NOT NULL,
   `deliveryDate` TIMESTAMP NOT NULL,
   `apparel` VARCHAR(17) NOT NULL,
+  `delivery` VARCHAR(17) NOT NULL,
   `employee` VARCHAR(10) NOT NULL,
 
   CONSTRAINT `stock_id_pk`
@@ -95,6 +96,9 @@ CREATE TABLE stock (
   CONSTRAINT `stock_apparel_fk`
     FOREIGN KEY(`apparel`)
     REFERENCES apparel(`id`),
+  CONSTRAINT `stock_delivery_fk`
+    FOREIGN KEY(`delivery`)
+    REFERENCES orderRequest(`id`)
   CONSTRAINT `stock_employee_fk`
     FOREIGN KEY(`employee`)
     REFERENCES employee(`username`)
@@ -120,7 +124,7 @@ CREATE TABLE discount (
 
 CREATE TABLE sale (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `date` DATE NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL,
   `qty` INT DEFAULT 1 NOT NULL,
   `apparel` VARCHAR(17) NOT NULL,
   `employee` VARCHAR(10) NOT NULL,
@@ -137,12 +141,12 @@ CREATE TABLE sale (
 
 -- Privileges
 GRANT ALL PRIVILEGES ON bluetag.* TO 'bt_master'@'localhost';
-GRANT INSERT, SELECT, DELETE ON bluetag.orderRequest TO 'bt_employee'@'localhost';
-GRANT INSERT, SELECT, DELETE ON bluetag.orderRequestItem TO 'bt_employee'@'localhost';
-GRANT INSERT, SELECT, DELETE ON bluetag.apparel TO 'bt_employee'@'localhost';
-GRANT INSERT, SELECT, DELETE ON bluetag.stock TO 'bt_employee'@'localhost';
-GRANT INSERT, SELECT, DELETE ON bluetag.discount TO 'bt_employee'@'localhost';
-GRANT INSERT, SELECT, DELETE ON bluetag.sale TO 'bt_employee'@'localhost';
+GRANT ALL PRIVILEGES ON bluetag.orderRequest TO 'bt_employee'@'localhost';
+GRANT ALL PRIVILEGES ON bluetag.orderRequestItem TO 'bt_employee'@'localhost';
+GRANT ALL PRIVILEGES ON bluetag.apparel TO 'bt_employee'@'localhost';
+GRANT ALL PRIVILEGES ON bluetag.stock TO 'bt_employee'@'localhost';
+GRANT ALL PRIVILEGES ON bluetag.discount TO 'bt_employee'@'localhost';
+GRANT ALL PRIVILEGES ON bluetag.sale TO 'bt_employee'@'localhost';
 
 GRANT EXECUTE ON bluetag.* TO 'bt_employee'@'localhost';
 GRANT EXECUTE ON bluetag.* TO 'bt_master'@'localhost';

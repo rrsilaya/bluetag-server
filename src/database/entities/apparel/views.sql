@@ -1,6 +1,4 @@
--- -- Stock
-
--- -- Fast-moving Items
+-- Fast-moving Items
 -- SELECT
 --   apparel.id,
 --   type,
