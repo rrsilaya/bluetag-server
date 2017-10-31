@@ -7,7 +7,8 @@ CREATE PROCEDURE viewAllApparel (
   IN limitD INT,
   IN offsetD INT)
 BEGIN
-  SELECT * FROM apparel
+  SELECT *
+  FROM apparel_discount
   LIMIT limitD OFFSET offsetD;
 END;
 $$
@@ -19,7 +20,7 @@ DELIMITER $$
 CREATE PROCEDURE viewApparel (
   IN id VARCHAR(17))
 BEGIN
-  SELECT * FROM apparel
+  SELECT * FROM apparel_discount
   WHERE apparel.id = id;
 END;
 $$
@@ -30,6 +31,7 @@ DROP PROCEDURE IF EXISTS addApparel;
 DELIMITER $$
 CREATE PROCEDURE addApparel (
   IN id VARCHAR(17),
+  IN brand VARCHAR(30),
   IN type VARCHAR(30),
   IN size VARCHAR(10),
   IN color VARCHAR(20),
@@ -40,6 +42,7 @@ CREATE PROCEDURE addApparel (
 BEGIN
   INSERT INTO apparel VALUES (
     id,
+    brand,
     type,
     size,
     color,
@@ -67,6 +70,8 @@ CREATE PROCEDURE removeApparel (
 BEGIN
   DELETE FROM stock
   WHERE stock.apparel = id;
+  DELETE FROM discount
+  WHERE discount.apparel = id;
   DELETE FROM apparel
   WHERE apparel.id = id;
 END;

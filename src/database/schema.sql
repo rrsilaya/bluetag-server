@@ -73,6 +73,7 @@ CREATE TABLE orderRequestItem (
 
 CREATE TABLE apparel (
   `id` VARCHAR(17) NOT NULL,
+  `brand` VARCHAR(30) NOT NULL,
   `type` VARCHAR(30) NOT NULL,
   `size` VARCHAR(10) NOT NULL,
   `color` VARCHAR(20),
