@@ -49,6 +49,7 @@ CREATE TABLE orderRequest (
     'delivered',
     'cancelled'
   ) DEFAULT 'pending' NOT NULL,
+  `company` VARCHAR(50) NOT NULL,
   `employee` VARCHAR(10) NOT NULL,
 
   CONSTRAINT `orderRequest_id_pk`
@@ -73,7 +74,7 @@ CREATE TABLE orderRequestItem (
 
 CREATE TABLE apparel (
   `id` VARCHAR(17) NOT NULL,
-  `brand` VARCHAR(30) NOT NULL,
+  `brand` VARCHAR(50) NOT NULL,
   `type` VARCHAR(30) NOT NULL,
   `size` VARCHAR(10) NOT NULL,
   `color` VARCHAR(20),
