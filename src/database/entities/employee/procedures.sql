@@ -20,7 +20,6 @@ CREATE PROCEDURE addUser(
 BEGIN
   INSERT INTO employee
   VALUES (
-    DEFAULT,
     username,
     password,
     type
@@ -40,3 +39,5 @@ BEGIN
 END;
 $$
 DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE bluetag.getUser TO 'bt_default'@'localhost';

@@ -1,0 +1,11 @@
+-- -- ID
+-- CREATE INDEX apparel_id_index
+-- USING BTREE
+-- ON apparel(id)
+-- ASC;
+
+-- -- Delivery Date
+-- CREATE INDEX apparel_deliveryDate_index
+-- USING BTREE
+-- ON apparel(deliveryDate)
+-- DESC;

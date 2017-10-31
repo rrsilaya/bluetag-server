@@ -14,7 +14,6 @@ USE bluetag;
 
 -- Database Definition
 CREATE TABLE employee (
-  `id` INT NOT NULL AUTO_INCREMENT,
 	`username` VARCHAR(10) NOT NULL,
   `password` VARCHAR(24) NOT NULL, -- to be adjusted (for encyrption)
   `type` ENUM(
@@ -23,7 +22,7 @@ CREATE TABLE employee (
   ) DEFAULT 'employee' NOT NULL,
 
 	CONSTRAINT employee_username_pk
-    PRIMARY KEY(`id`),
+    PRIMARY KEY(`username`),
   CONSTRAINT employee_username_uk
     UNIQUE KEY(`username`)
 );
@@ -77,14 +76,26 @@ CREATE TABLE apparel (
   `type` VARCHAR(30) NOT NULL,
   `size` VARCHAR(10) NOT NULL,
   `color` VARCHAR(20),
-  `qty` INT DEFAULT 1 NOT NULL,
+  `qty` INT NOT NULL,
   `price` DECIMAL NOT NULL,
-  `deliveryDate` TIMESTAMP NOT NULL,
-  `employee` VARCHAR(10) NOT NULL,
 
   CONSTRAINT `apparel_id_pk`
+    PRIMARY KEY(`id`)
+);
+
+CREATE TABLE stock (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `qty` INT DEFAULT 1 NOT NULL,
+  `deliveryDate` TIMESTAMP NOT NULL,
+  `apparel` VARCHAR(17) NOT NULL,
+  `employee` VARCHAR(10) NOT NULL,
+
+  CONSTRAINT `stock_id_pk`
     PRIMARY KEY(`id`),
-  CONSTRAINT `apparel_employee_fk`
+  CONSTRAINT `stock_apparel_fk`
+    FOREIGN KEY(`apparel`)
+    REFERENCES apparel(`id`),
+  CONSTRAINT `stock_employee_fk`
     FOREIGN KEY(`employee`)
     REFERENCES employee(`username`)
 );
@@ -129,10 +140,10 @@ GRANT ALL PRIVILEGES ON bluetag.* TO 'bt_master'@'localhost';
 GRANT INSERT, SELECT, DELETE ON bluetag.orderRequest TO 'bt_employee'@'localhost';
 GRANT INSERT, SELECT, DELETE ON bluetag.orderRequestItem TO 'bt_employee'@'localhost';
 GRANT INSERT, SELECT, DELETE ON bluetag.apparel TO 'bt_employee'@'localhost';
+GRANT INSERT, SELECT, DELETE ON bluetag.stock TO 'bt_employee'@'localhost';
 GRANT INSERT, SELECT, DELETE ON bluetag.discount TO 'bt_employee'@'localhost';
 GRANT INSERT, SELECT, DELETE ON bluetag.sale TO 'bt_employee'@'localhost';
 
-GRANT EXECUTE ON PROCEDURE bluetag.getUser TO 'bt_default'@'localhost';
 GRANT EXECUTE ON bluetag.* TO 'bt_employee'@'localhost';
 GRANT EXECUTE ON bluetag.* TO 'bt_master'@'localhost';
 

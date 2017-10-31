@@ -1,3 +1,5 @@
+USE bluetag;
+
 -- View All Apparel
 DROP PROCEDURE IF EXISTS viewAllApparel;
 DELIMITER $$
@@ -27,21 +29,30 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS addApparel;
 DELIMITER $$
 CREATE PROCEDURE addApparel (
+  IN id VARCHAR(17),
   IN type VARCHAR(30),
   IN size VARCHAR(10),
   IN color VARCHAR(20),
   IN qty INT,
   IN price DECIMAL,
+  IN timestamp TIMESTAMP,
   IN employee VARCHAR(10))
 BEGIN
   INSERT INTO apparel VALUES (
-    UUID_SHORT(),
+    id,
     type,
     size,
     color,
     qty,
-    price,
-    NOW(),
+    price
+  ) ON DUPLICATE KEY UPDATE
+    apparel.price = price,
+    apparel.qty = apparel.qty + qty;
+  INSERT INTO stock VALUES (
+    DEFAULT,
+    qty,
+    timestamp,
+    id,
     employee
   );
 END;
@@ -54,6 +65,8 @@ DELIMITER $$
 CREATE PROCEDURE removeApparel (
   IN id VARCHAR(17))
 BEGIN
+  DELETE FROM stock
+  WHERE stock.apparel = id;
   DELETE FROM apparel
   WHERE apparel.id = id;
 END;
