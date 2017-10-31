@@ -32,6 +32,7 @@ CREATE TABLE log (
   `id` VARCHAR(17) NOT NULL,
   `timestamp` TIMESTAMP NOT NULL,
   `action` VARCHAR(30) NOT NULL,
+  `notes` TEXT NOT NULL, -- specifies other details in the action
   `employee` VARCHAR(10) NOT NULL,
 
   CONSTRAINT `audit_id_pk`
@@ -124,10 +125,32 @@ CREATE TABLE sale (
 );
 
 -- Privileges
-GRANT SELECT ON bluetag.employee TO 'bt_default'@'localhost';
 GRANT ALL PRIVILEGES ON bluetag.* TO 'bt_master'@'localhost';
 GRANT INSERT, SELECT, DELETE ON bluetag.orderRequest TO 'bt_employee'@'localhost';
 GRANT INSERT, SELECT, DELETE ON bluetag.orderRequestItem TO 'bt_employee'@'localhost';
 GRANT INSERT, SELECT, DELETE ON bluetag.apparel TO 'bt_employee'@'localhost';
 GRANT INSERT, SELECT, DELETE ON bluetag.discount TO 'bt_employee'@'localhost';
 GRANT INSERT, SELECT, DELETE ON bluetag.sale TO 'bt_employee'@'localhost';
+
+GRANT EXECUTE ON PROCEDURE bluetag.getUser TO 'bt_default'@'localhost';
+GRANT EXECUTE ON bluetag.* TO 'bt_employee'@'localhost';
+GRANT EXECUTE ON bluetag.* TO 'bt_master'@'localhost';
+
+-- Log
+DROP PROCEDURE IF EXISTS log;
+DELIMITER $$
+CREATE PROCEDURE log (
+  IN action VARCHAR(30),
+  IN notes TEXT,
+  IN employee VARCHAR(10))
+BEGIN
+  INSERT INTO log VALUES (
+    UUID_SHORT(),
+    NOW(),
+    action,
+    notes,
+    employee
+  );
+END;
+$$
+DELIMITER ;
