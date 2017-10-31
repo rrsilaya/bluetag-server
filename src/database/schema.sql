@@ -98,7 +98,7 @@ CREATE TABLE stock (
     REFERENCES apparel(`id`),
   CONSTRAINT `stock_delivery_fk`
     FOREIGN KEY(`delivery`)
-    REFERENCES orderRequest(`id`)
+    REFERENCES orderRequest(`id`),
   CONSTRAINT `stock_employee_fk`
     FOREIGN KEY(`employee`)
     REFERENCES employee(`username`)

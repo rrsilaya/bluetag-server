@@ -1,3 +1,5 @@
+USE bluetag;
+
 -- View All Apparel
 DROP PROCEDURE IF EXISTS viewAllApparel;
 DELIMITER $$
