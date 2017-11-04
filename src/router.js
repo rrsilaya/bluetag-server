@@ -6,11 +6,11 @@ import employeeRouter from './entities/employee/router';
 
 const router = Router();
 
-router.use('/', authRouter);
+router.use(authRouter);
 
 /* Auth Middleware */
 router.use((req, res, next) => {
-  if (req.session) {
+  if (req.session.user) {
     return next();
   }
 
