@@ -10,6 +10,19 @@ END;
 $$
 DELIMITER ;
 
+-- Get user list
+DROP PROCEDURE IF EXISTS getUsers;
+DELIMITER $$
+CREATE PROCEDURE getUsers (
+  IN limitD INT,
+  IN offsetD INT)
+BEGIN
+  SELECT username, type FROM employee
+  LIMIT limitD OFFSET offsetD;
+END;
+$$
+DELIMITER ;
+
 -- Add User
 DROP PROCEDURE IF EXISTS addUser;
 DELIMITER $$

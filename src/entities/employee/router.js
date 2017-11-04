@@ -3,6 +3,36 @@ import * as Ctrl from './controller';
 
 const router = Router();
 
+router.get('/api/employees/:page', async (req, res) => {
+  try {
+    const totalUsers = await Ctrl.countUsers();
+    const totalPages = Math.ceil(totalUsers / 20);
+
+    if (req.params.page > totalPages) {
+      res.status(400).json({
+        status: 400,
+        message: 'Invalid employee pagination'
+      });
+    } else {
+      const users = await Ctrl.getUsers(req.params);
+
+      res.status(200).json({
+        status: 200,
+        message: 'Successfully fetched users',
+        data: {
+          page: parseInt(req.params.page),
+          totalPages,
+          users
+        }
+      });
+    }
+  } catch (status) {
+    res
+      .status(500)
+      .json({ status, message: 'Internal server error on fetching user' });
+  }
+});
+
 router.post('/api/employees', async (req, res) => {
   try {
     const username = await Ctrl.createAccount(req.body);
