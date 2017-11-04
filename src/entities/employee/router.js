@@ -56,4 +56,28 @@ router.post('/api/employees', async (req, res) => {
   }
 });
 
+router.delete('/api/employees', async (req, res) => {
+  try {
+    await Ctrl.deleteAccount(req.body);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully deleted account'
+    });
+  } catch (status) {
+    let message = '';
+
+    switch (status) {
+      case 500:
+        message = 'Internal server error on deleting account';
+        break;
+      case 404:
+        message = 'User does not exists';
+        break;
+    }
+
+    res.status(status).json({ status, message });
+  }
+});
+
 export default router;

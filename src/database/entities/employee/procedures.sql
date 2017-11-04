@@ -47,7 +47,7 @@ DELIMITER $$
 CREATE PROCEDURE removeUser(
   IN user VARCHAR(10))
 BEGIN
-  DELETE FROM EMPLOYEE
+  DELETE FROM employee
   WHERE username = user;
 END;
 $$

@@ -53,3 +53,22 @@ export const createAccount = ({ username, password, type }) => {
     });
   });
 };
+
+export const deleteAccount = ({ username }) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      CALL removeUser(:username)
+    `;
+
+    db.query(query, { username }, (err, result) => {
+      if (err) {
+        console.log(err);
+        return reject(500);
+      } else if (!result.info.affectedRows) {
+        return reject(404);
+      }
+
+      return resolve();
+    });
+  });
+};
