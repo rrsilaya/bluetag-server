@@ -40,7 +40,7 @@ router.post('/api/logout', (req, res) => {
   });
 });
 
-router.post('/api/session', (req, res) => {
+router.get('/api/session', (req, res) => {
   res.status(200).json({
     status: 200,
     message: 'Succesfully fetched current session',
