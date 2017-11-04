@@ -2,6 +2,7 @@ import { Router } from 'express';
 // Import routers from different entitties
 // here. Use `router.use(<router>);`.
 import authRouter from './entities/auth/router';
+import employeeRouter from './entities/employee/router';
 
 const router = Router();
 
@@ -18,5 +19,7 @@ router.use((req, res, next) => {
     message: 'Must be logged in'
   });
 });
+
+router.use(employeeRouter);
 
 export default router;
