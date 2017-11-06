@@ -52,7 +52,7 @@ SELECT
   ) AS discount,
   IF(
     isActive,
-    ROUND((rate / 100) * price, 2),
+    ROUND((price-((rate / 100) * price)), 2),
     price
   ) AS sellingPrice
 FROM apparel
