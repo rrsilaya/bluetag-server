@@ -31,4 +31,42 @@ router.get('/api/apparel/:page', async (req, res) => {
   }
 });
 
+router.post('/api/apparel', async (req, res) => {
+  try {
+    const apparel = await Ctrl.addApparel(req.body);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully added apparel',
+      data: apparel
+    });
+  } catch (status) {
+    let message = '';
+
+    switch (status) {
+      case 400:
+        message = 'Apparel already exists';
+        break;
+      case 500:
+        message = 'Internal server error while adding apparel';
+        break;
+    }
+
+    res.status(status).json({ status, message });
+  }
+});
+
+router.delete('/api/apparel/:id', async (req, res) => {
+  try {
+    await Ctrl.removeApparel(req.params.id);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully removed apparel'
+    });
+  } catch (status) {
+    res.status(status).json({ status, message: 'Internal server error while removing apparel' });
+  }
+});
+
 export default router;

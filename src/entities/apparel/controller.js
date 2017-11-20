@@ -37,3 +37,44 @@ export const getApparel = page => {
     });
   });
 };
+
+export const addApparel = ({ id, brand, type, size, color, qty, price, timestamp, employee }) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      CALL addApparel(
+        :id, :brand, :type,
+        :size, :color, :qty,
+        :price, :timestamp, :employee
+      );
+    `;
+
+    db.query(query, { id, brand, type, size, color, qty, price, timestamp, employee }, (err, result) => {
+      if (err) {
+        if (err.code === 1062) {
+          return reject(400);
+        }
+
+        return reject(500);
+      }
+
+      return resolve(result);
+    });
+  });
+}
+
+export const removeApparel = id => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      CALL removeApparel(:id)
+    `;
+
+    db.query(query, { id }, err => {
+      if (err) {
+        console.log(err);
+        return reject(500);
+      }
+
+      return resolve();
+    });
+  });
+}
