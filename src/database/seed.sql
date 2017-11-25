@@ -1,6 +1,7 @@
 USE bluetag;
 
 -- EMPLOYEE
+INSERT INTO employee (`username`, `password`, `type`) VALUES ('admin', 'admin', 'manager');
 INSERT INTO employee (`username`, `password`, `type`) VALUES ('abuckridge', 'rathbernhard', 'manager');
 INSERT INTO employee (`username`, `password`, `type`) VALUES ('alexandra3', 'stehr', 'employee');
 INSERT INTO employee (`username`, `password`, `type`) VALUES ('alvah.huel', 'hauck', 'employee');
