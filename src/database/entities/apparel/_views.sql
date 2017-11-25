@@ -1,6 +1,6 @@
 -- Latest Discounts
-DROP VIEW IF EXISTS latest_discount;
-CREATE VIEW latest_discount AS
+DROP VIEW IF EXISTS discount_latest;
+CREATE VIEW discount_latest AS
 SELECT
   id,
   MAX(date) AS date,
@@ -12,8 +12,8 @@ FROM discount
 GROUP BY apparel;
 
 -- Latest Stock
-DROP VIEW IF EXISTS latest_stock;
-CREATE VIEW latest_stock AS
+DROP VIEW IF EXISTS stock_latest;
+CREATE VIEW stock_latest AS
 SELECT
   id,
   qty,
@@ -25,8 +25,8 @@ FROM stock
 GROUP BY apparel;
 
 -- Latest Sale
-DROP VIEW IF EXISTS latest_sale;
-CREATE VIEW latest_sale AS
+DROP VIEW IF EXISTS sale_latest;
+CREATE VIEW sale_latest AS
 SELECT
   apparel,
   SUM(qty) AS sales,
@@ -51,7 +51,7 @@ SELECT
   ) AS sellingPrice
 FROM apparel
 LEFT JOIN
-  latest_discount AS discount
+  discount_latest AS discount
 ON apparel.id = discount.apparel;
 
 -- Apparel Sales
@@ -62,7 +62,7 @@ SELECT
   sales,
   latestSale
 FROM apparel_discount AS apparel
-LEFT JOIN latest_sale AS sale
+LEFT JOIN sale_latest AS sale
 ON apparel.id = sale.apparel;
 
 -- Full Table
@@ -71,21 +71,21 @@ CREATE VIEW apparel_discount_sale_stock AS
 SELECT
   apparel.*,
   deliveryDate
-FROM apparel_sale AS apparel
+FROM apparel_discount_sale AS apparel
 LEFT JOIN
-  latest_stock AS stock
+  stock_latest AS stock
 ON apparel.id = stock.apparel;
 
 -- Discounted Items
-DROP VIEW IF EXISTS discountedItem;
-CREATE VIEW discountedItem AS
+DROP VIEW IF EXISTS apparel_discounted;
+CREATE VIEW apparel_discounted AS
 SELECT *
 FROM apparel_discount
 WHERE discount IS NOT NULL;
 
 -- Slow-moving Items
-DROP VIEW IF EXISTS slowMovingItem;
-CREATE VIEW slowMovingItem AS
+DROP VIEW IF EXISTS apparel_slow;
+CREATE VIEW apparel_slow AS
 SELECT *
 FROM apparel_discount_sale_stock AS apparel
 WHERE
@@ -100,8 +100,8 @@ AND (
 );
 
 -- Fast-moving Items
-DROP VIEW IF EXISTS fastMovingItem;
-CREATE VIEW fastMovingItem AS
+DROP VIEW IF EXISTS apparel_fast;
+CREATE VIEW apparel_fast AS
 SELECT *
 FROM apparel_discount_sale_stock AS apparel
 WHERE
