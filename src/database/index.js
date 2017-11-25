@@ -1,6 +1,6 @@
-import MariaSQL from 'mariasql';
+import mysql from 'mysql';
 
-const db = new MariaSQL({
+const db = mysql.createConnection({
   host: 'localhost',
   user: 'bluetag',
   password: 'bluetag',
@@ -10,6 +10,15 @@ const db = new MariaSQL({
 db.on('ready', () => console.log('Database is connected')).on('error', err => {
   console.log('Error in connecting to database');
   console.log(err);
+});
+
+db.connect(err => {
+  if (err) {
+    console.log('Error in connecting to database');
+    console.log(err.message);
+  } else {
+    console.log('Success in connecting to database');
+  }
 });
 
 db.query('USE bluetag');

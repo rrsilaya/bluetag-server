@@ -24,10 +24,12 @@ export const getApparel = page => {
       SELECT *
       FROM apparel_info
       LIMIT 10
-      OFFSET :offset
+      OFFSET ?
     `;
 
-    db.query(query, { offset: ((page - 1) * 10) + 1 }, (err, rows) => {
+    const values = [(page - 1) * 10 + 1];
+
+    db.query(query, values, (err, rows) => {
       if (err) {
         console.log(err);
         reject(500);
@@ -38,17 +40,38 @@ export const getApparel = page => {
   });
 };
 
-export const addApparel = ({ id, brand, type, size, color, qty, price, timestamp, employee }) => {
+export const addApparel = ({
+  id,
+  brand,
+  type,
+  size,
+  color,
+  qty,
+  price,
+  timestamp,
+  employee
+}) => {
   return new Promise((resolve, reject) => {
     const query = `
       CALL addApparel(
-        :id, :brand, :type,
-        :size, :color, :qty,
-        :price, :timestamp, :employee
+        ?, ?, ?,
+        ?, ?, ?,
+        ?, ?, ?
       );
     `;
 
-    db.query(query, { id, brand, type, size, color, qty, price, timestamp, employee }, (err, result) => {
+    const values = [
+      id,
+      brand,
+      type,
+      size,
+      color,
+      qty,
+      price,
+      timestamp,
+      employee
+    ];
+    db.query(query, values, (err, result) => {
       if (err) {
         if (err.code === 1062) {
           return reject(400);
@@ -60,15 +83,15 @@ export const addApparel = ({ id, brand, type, size, color, qty, price, timestamp
       return resolve(result);
     });
   });
-}
+};
 
 export const removeApparel = id => {
   return new Promise((resolve, reject) => {
     const query = `
-      CALL removeApparel(:id)
+      CALL removeApparel(?)
     `;
 
-    db.query(query, { id }, err => {
+    db.query(query, [id], err => {
       if (err) {
         console.log(err);
         return reject(500);
@@ -77,4 +100,4 @@ export const removeApparel = id => {
       return resolve();
     });
   });
-}
+};

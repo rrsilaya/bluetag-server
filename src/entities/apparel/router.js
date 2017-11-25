@@ -3,7 +3,7 @@ import * as Ctrl from './controller';
 
 const router = Router();
 
-router.get('/api/apparel/:page', async (req, res) => {
+router.get('/api/apparels/:page', async (req, res) => {
   try {
     const totalApparel = await Ctrl.countApparel();
     const totalPages = Math.ceil(totalApparel / 10);
@@ -27,7 +27,9 @@ router.get('/api/apparel/:page', async (req, res) => {
       });
     }
   } catch (status) {
-    res.status(status).json({ status, message: 'Internal server error while getting apparel' });
+    res
+      .status(status)
+      .json({ status, message: 'Internal server error while getting apparel' });
   }
 });
 
@@ -65,7 +67,12 @@ router.delete('/api/apparel/:id', async (req, res) => {
       message: 'Successfully removed apparel'
     });
   } catch (status) {
-    res.status(status).json({ status, message: 'Internal server error while removing apparel' });
+    res
+      .status(status)
+      .json({
+        status,
+        message: 'Internal server error while removing apparel'
+      });
   }
 });
 

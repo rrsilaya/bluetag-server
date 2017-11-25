@@ -2,10 +2,15 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import session from 'express-session';
+import store from 'express-mysql-session';
+import db from './database';
 
 import router from './router';
 
 const app = express();
+const MySQLStore = store(session);
+const sessionStore = new MySQLStore({}, db);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger('dev'));
@@ -16,6 +21,8 @@ app.use(
     secret: 'bluetag',
     resave: true,
     saveUninitialized: true,
+    store: sessionStore,
+    createDatabaseTable: true,
     checkExpirationInterval: 900000,
     expiration: 86400000
   })

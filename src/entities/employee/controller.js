@@ -16,10 +16,11 @@ export const countUsers = () => {
 export const getUsers = ({ page }) => {
   return new Promise((resolve, reject) => {
     const query = `
-      CALL getUsers(:limit, :offset)
+      CALL getUsers(?, ?)
     `;
 
-    db.query(query, { limit: 20, offset: 20 * (page - 1) }, (err, rows) => {
+    const values = [20, 20 * (page - 1)];
+    db.query(query, values, (err, rows) => {
       rows = rows[0];
 
       if (err) {
@@ -34,14 +35,11 @@ export const getUsers = ({ page }) => {
 export const createAccount = ({ username, password, type }) => {
   return new Promise((resolve, reject) => {
     const query = `
-      CALL addUser(
-        :username,
-        :password,
-        :type
-      )
+      CALL addUser(?, ?, ?)
     `;
 
-    db.query(query, { username, password, type }, (err, result) => {
+    const values = [username, password, type];
+    db.query(query, values, (err, result) => {
       if (err) {
         if (err.code === 1062) {
           return reject(400);
@@ -57,10 +55,10 @@ export const createAccount = ({ username, password, type }) => {
 export const deleteAccount = ({ username }) => {
   return new Promise((resolve, reject) => {
     const query = `
-      CALL removeUser(:username)
+      CALL removeUser(?)
     `;
 
-    db.query(query, { username }, (err, result) => {
+    db.query(query, [username], (err, result) => {
       if (err) {
         console.log(err);
         return reject(500);

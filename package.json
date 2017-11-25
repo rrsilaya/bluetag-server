@@ -5,9 +5,10 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "express-mysql-session": "^1.2.3",
     "express-session": "^1.15.6",
-    "mariasql": "^0.2.6",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "mysql": "^2.15.0"
   },
   "devDependencies": {
     "backpack-core": "^0.4.3",
