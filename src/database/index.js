@@ -2,8 +2,8 @@ import MariaSQL from 'mariasql';
 
 const db = new MariaSQL({
   host: 'localhost',
-  user: 'bt_master',
-  password: 'master',
+  user: 'bluetag',
+  password: 'bluetag',
   db: 'bluetag'
 });
 

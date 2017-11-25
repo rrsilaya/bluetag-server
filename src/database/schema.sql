@@ -1,10 +1,6 @@
 -- User
-DROP USER IF EXISTS 'bt_default'@'localhost';
-DROP USER IF EXISTS 'bt_master'@'localhost';
-DROP USER IF EXISTS 'bt_employee'@'localhost';
-CREATE USER 'bt_default'@'localhost' IDENTIFIED BY 'default';
-CREATE USER 'bt_master'@'localhost' IDENTIFIED BY 'master';
-CREATE USER 'bt_employee'@'localhost' IDENTIFIED BY 'employee';
+DROP USER IF EXISTS 'bluetag'@'localhost';
+CREATE USER 'bluetag'@'localhost' IDENTIFIED BY 'bluetag';
 
 -- Database
 DROP DATABASE IF EXISTS bluetag;
@@ -142,16 +138,8 @@ CREATE TABLE sale (
 );
 
 -- Privileges
-GRANT ALL PRIVILEGES ON bluetag.* TO 'bt_master'@'localhost';
-GRANT ALL PRIVILEGES ON bluetag.orderRequest TO 'bt_employee'@'localhost';
-GRANT ALL PRIVILEGES ON bluetag.orderRequestItem TO 'bt_employee'@'localhost';
-GRANT ALL PRIVILEGES ON bluetag.apparel TO 'bt_employee'@'localhost';
-GRANT ALL PRIVILEGES ON bluetag.stock TO 'bt_employee'@'localhost';
-GRANT ALL PRIVILEGES ON bluetag.discount TO 'bt_employee'@'localhost';
-GRANT ALL PRIVILEGES ON bluetag.sale TO 'bt_employee'@'localhost';
-
-GRANT EXECUTE ON bluetag.* TO 'bt_employee'@'localhost';
-GRANT EXECUTE ON bluetag.* TO 'bt_master'@'localhost';
+GRANT ALL PRIVILEGES ON bluetag.* TO 'bluetag'@'localhost';
+GRANT EXECUTE ON bluetag.* TO 'bluetag'@'localhost';
 
 -- Log
 DROP PROCEDURE IF EXISTS log;
