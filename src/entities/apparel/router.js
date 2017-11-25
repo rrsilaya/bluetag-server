@@ -33,6 +33,31 @@ router.get('/api/apparels/:page', async (req, res) => {
   }
 });
 
+router.get('/api/apparel/:id', async (req, res) => {
+  try {
+    const apparel = await Ctrl.getApparelByIdInfo(req.params.id);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully fetched apparel information',
+      data: apparel
+    });
+  } catch (status) {
+    let message = '';
+
+    switch (status) {
+      case 404:
+        message = 'Apparel does not exists';
+        break;
+      case 500:
+        message = 'Internal server error while getting apparel';
+        break;
+    }
+
+    res.status(status).json({ status, message });
+  }
+});
+
 router.post('/api/apparel', async (req, res) => {
   try {
     const apparel = await Ctrl.addApparel(req.body);
@@ -58,6 +83,42 @@ router.post('/api/apparel', async (req, res) => {
   }
 });
 
+router.put('/api/apparel/:id', async (req, res) => {
+  let apparel;
+
+  try {
+    apparel = await Ctrl.getApparelById(req.params.id);
+  } catch (status) {
+    let message = '';
+
+    switch (status) {
+      case 404:
+        message = 'Apparel does not exists';
+        break;
+      case 500:
+        message = 'Internal server error while finding apparel';
+        break;
+    }
+
+    res.status(status).json({ status, message });
+  }
+
+  try {
+    const newApparel = { ...apparel, ...req.body, id: req.params.id };
+    await Ctrl.editApparel(newApparel);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully edited apparel',
+      data: newApparel
+    });
+  } catch (status) {
+    res
+      .status(status)
+      .send({ status, message: 'Internal server error while editing apparel' });
+  }
+});
+
 router.delete('/api/apparel/:id', async (req, res) => {
   try {
     await Ctrl.removeApparel(req.params.id);
@@ -67,12 +128,10 @@ router.delete('/api/apparel/:id', async (req, res) => {
       message: 'Successfully removed apparel'
     });
   } catch (status) {
-    res
-      .status(status)
-      .json({
-        status,
-        message: 'Internal server error while removing apparel'
-      });
+    res.status(status).json({
+      status,
+      message: 'Internal server error while removing apparel'
+    });
   }
 });
 
