@@ -10,7 +10,7 @@ export const login = ({ username, password }) => {
       rows = rows[0];
 
       if (err) {
-        console.log(err);
+        console.log(err.message);
         return reject(500);
       } else if (!rows.length) {
         return reject(404); // no existing user

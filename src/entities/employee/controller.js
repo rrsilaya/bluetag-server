@@ -60,7 +60,7 @@ export const deleteAccount = ({ username }) => {
 
     db.query(query, [username], (err, result) => {
       if (err) {
-        console.log(err);
+        console.log(err.message);
         return reject(500);
       } else if (!result.info.affectedRows) {
         return reject(404);
