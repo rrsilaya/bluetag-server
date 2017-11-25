@@ -38,13 +38,7 @@ GROUP BY apparel;
 DROP VIEW IF EXISTS apparel_discount;
 CREATE VIEW apparel_discount AS
 SELECT
-  apparel.id,
-  brand,
-  type,
-  size,
-  color,
-  qty,
-  price,
+  apparel.*,
   IF(
     isActive,
     rate,
@@ -52,7 +46,7 @@ SELECT
   ) AS discount,
   IF(
     isActive,
-    ROUND((price-((rate / 100) * price)), 2),
+    ROUND((price - ((rate / 100) * price)), 2),
     price
   ) AS sellingPrice
 FROM apparel
@@ -61,18 +55,10 @@ LEFT JOIN
 ON apparel.id = discount.apparel;
 
 -- Apparel Sales
-DROP VIEW IF EXISTS apparel_sale;
-CREATE VIEW apparel_sale AS
+DROP VIEW IF EXISTS apparel_discount_sale;
+CREATE VIEW apparel_discount_sale AS
 SELECT
-  apparel.id,
-  brand,
-  type,
-  size,
-  color,
-  apparel.qty,
-  price,
-  discount,
-  sellingPrice,
+  apparel.*,
   sales,
   latestSale
 FROM apparel_discount AS apparel
@@ -80,21 +66,11 @@ LEFT JOIN latest_sale AS sale
 ON apparel.id = sale.apparel;
 
 -- Full Table
-DROP VIEW IF EXISTS apparel_info;
-CREATE VIEW apparel_info AS
+DROP VIEW IF EXISTS apparel_discount_sale_stock;
+CREATE VIEW apparel_discount_sale_stock AS
 SELECT
-  apparel.id,
-  brand,
-  type,
-  size,
-  color,
-  apparel.qty,
-  price,
-  discount,
-  sellingPrice,
-  deliveryDate,
-  sales,
-  latestSale
+  apparel.*,
+  deliveryDate
 FROM apparel_sale AS apparel
 LEFT JOIN
   latest_stock AS stock
@@ -111,7 +87,7 @@ WHERE discount IS NOT NULL;
 DROP VIEW IF EXISTS slowMovingItem;
 CREATE VIEW slowMovingItem AS
 SELECT *
-FROM apparel_info AS apparel
+FROM apparel_discount_sale_stock AS apparel
 WHERE
   DATEDIFF(
     NOW(),
@@ -127,7 +103,7 @@ AND (
 DROP VIEW IF EXISTS fastMovingItem;
 CREATE VIEW fastMovingItem AS
 SELECT *
-FROM apparel_info AS apparel
+FROM apparel_discount_sale_stock AS apparel
 WHERE
   DATEDIFF(
     NOW(),

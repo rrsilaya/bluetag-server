@@ -52,5 +52,3 @@ BEGIN
 END;
 $$
 DELIMITER ;
-
-GRANT EXECUTE ON PROCEDURE bluetag.getUser TO 'bt_default'@'localhost';
