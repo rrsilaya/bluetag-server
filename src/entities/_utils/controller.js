@@ -1,0 +1,22 @@
+import db from '../../database';
+
+export const countItems = (table, m) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT COUNT(*) AS total
+      FROM ${table}
+    `;
+
+    db.query(query, null, (err, result) => {
+      if (err) {
+        console.log(err.message);
+        return reject(500);
+      }
+
+      return resolve({
+        items: result[0].total,
+        pages: Math.ceil(result[0].total / m)
+      });
+    });
+  });
+};

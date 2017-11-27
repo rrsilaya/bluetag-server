@@ -4,6 +4,7 @@ import { Router } from 'express';
 import authRouter from './entities/auth/router';
 import employeeRouter from './entities/employee/router';
 import apparelRouter from './entities/apparel/router';
+import orderRouter from './entities/order/router';
 
 const router = Router();
 
@@ -23,5 +24,6 @@ router.use(authRouter);
 
 router.use(employeeRouter);
 router.use(apparelRouter);
+router.use(orderRouter);
 
 export default router;
