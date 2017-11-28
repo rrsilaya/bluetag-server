@@ -1,27 +1,27 @@
 import { Router } from 'express';
+import { countItems } from '../_utils/';
 import * as Ctrl from './controller';
 
 const router = Router();
 
 router.get('/api/apparels/:page', async (req, res) => {
   try {
-    const totalApparel = await Ctrl.countApparel();
-    const totalPages = Math.ceil(totalApparel / 10);
+    const { pages } = await countItems('apparel_discount_sale_stock', 10);
 
-    if (req.params.page > totalPages) {
+    if (req.params.page > pages) {
       res.status(400).json({
         status: 400,
         message: 'Invalid apparel pagination'
       });
     } else {
-      const apparel = await Ctrl.getApparel(req.params.page);
+      const apparel = await Ctrl.getApparel(req.params.page, req.query);
 
       res.status(200).json({
         status: 200,
         message: 'Successfully fetched apparel',
         data: {
           page: parseInt(req.params.page),
-          totalPages,
+          pages,
           apparel
         }
       });

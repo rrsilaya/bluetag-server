@@ -1,6 +1,7 @@
+import { getOffset } from '../_utils/';
 import db from '../../database';
 
-export const getOrderRequest = page => {
+export const getOrderRequest = (page, { category = 'timestamp', order }) => {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT
@@ -9,10 +10,12 @@ export const getOrderRequest = page => {
         status,
         company
       FROM orderRequest
+      ORDER BY ??
+      ${order === 'asc' ? 'ASC' : 'DESC'}
       LIMIT ? OFFSET ?
     `;
 
-    const values = [15, 15 * (page - 1)];
+    const values = [category, 15, getOffset(15, page)];
     db.query(query, values, (err, rows) => {
       if (err) {
         console.log(err.message);
@@ -45,6 +48,28 @@ export const getOrderRequestById = id => {
       if (!row.length) return reject(404);
 
       return resolve(row[0]);
+    });
+  });
+};
+
+export const editOrderRequest = (id, { status, company }) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      UPDATE orderRequest
+      SET
+        status = ?,
+        company = ?
+      WHERE id = ?
+    `;
+
+    const values = [status, company, id];
+    db.query(query, values, (err, res) => {
+      if (err) {
+        console.log(err.message);
+        return reject(500);
+      }
+
+      return resolve();
     });
   });
 };

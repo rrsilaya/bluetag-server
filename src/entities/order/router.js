@@ -6,7 +6,7 @@ const router = Router();
 
 router.get('/api/orders/:page', async (req, res) => {
   try {
-    const { pages, items } = await countItems('orderRequest', 15);
+    const { pages } = await countItems('orderRequest', 15);
 
     if (req.params.page > pages) {
       res.status(400).json({
@@ -14,7 +14,7 @@ router.get('/api/orders/:page', async (req, res) => {
         message: 'Invalid order pagination'
       });
     } else {
-      const orders = await Ctrl.getOrderRequest(req.params.page);
+      const orders = await Ctrl.getOrderRequest(req.params.page, req.query);
 
       res.status(200).json({
         status: 200,
@@ -55,6 +55,23 @@ router.get('/api/order/:id', async (req, res) => {
     }
 
     res.status(status).json({ status, message });
+  }
+});
+
+router.put('/api/order/:id', async (req, res) => {
+  try {
+    await Ctrl.editOrderRequest(req.params.id, req.body);
+    const edited = await Ctrl.getOrderRequestById(req.params.id);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully edited order',
+      data: edited
+    });
+  } catch (status) {
+    res
+      .status(status)
+      .json({ status, message: 'Internal server error while editing order' });
   }
 });
 

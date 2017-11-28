@@ -4,10 +4,10 @@ export const countItems = (table, m) => {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT COUNT(*) AS total
-      FROM ${table}
+      FROM ??
     `;
 
-    db.query(query, null, (err, result) => {
+    db.query(query, [table], (err, result) => {
       if (err) {
         console.log(err.message);
         return reject(500);

@@ -1,33 +1,18 @@
+import { getOffset } from '../_utils/';
 import db from '../../database';
 
-export const countApparel = () => {
-  return new Promise((resolve, reject) => {
-    const query = `
-      SELECT COUNT(*) AS total
-      FROM apparel_info
-    `;
-
-    db.query(query, null, (err, result) => {
-      if (err) {
-        console.log(err.message);
-        reject(500);
-      }
-
-      return resolve(result[0].total);
-    });
-  });
-};
-
-export const getApparel = page => {
+export const getApparel = (page, { category = 'brand', order }) => {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT *
-      FROM apparel_info
+      FROM apparel_discount_sale_stock
+      ORDER BY ??
+      ${order === 'desc' ? 'DESC' : 'ASC'}
       LIMIT 10
       OFFSET ?
     `;
 
-    const values = [(page - 1) * 10 + 1];
+    const values = [category, getOffset(10, page)];
 
     db.query(query, values, (err, rows) => {
       if (err) {
