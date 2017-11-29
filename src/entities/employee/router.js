@@ -1,27 +1,27 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import { countItems } from '../_utils/';
 
 const router = Router();
 
 router.get('/api/employees/:page', async (req, res) => {
   try {
-    const totalUsers = await Ctrl.countUsers();
-    const totalPages = Math.ceil(totalUsers / 20);
+    const { pages } = await countItems('employee', 20);
 
-    if (req.params.page > totalPages) {
+    if (req.params.page > pages) {
       res.status(400).json({
         status: 400,
         message: 'Invalid employee pagination'
       });
     } else {
-      const users = await Ctrl.getUsers(req.params);
+      const users = await Ctrl.getUsers(req.params.page);
 
       res.status(200).json({
         status: 200,
         message: 'Successfully fetched users',
         data: {
           page: parseInt(req.params.page),
-          totalPages,
+          pages,
           users
         }
       });
@@ -33,7 +33,7 @@ router.get('/api/employees/:page', async (req, res) => {
   }
 });
 
-router.post('/api/employees', async (req, res) => {
+router.post('/api/employee', async (req, res) => {
   try {
     const username = await Ctrl.createAccount(req.body);
     res.status(200).json({
@@ -56,9 +56,9 @@ router.post('/api/employees', async (req, res) => {
   }
 });
 
-router.delete('/api/employees', async (req, res) => {
+router.delete('/api/employee/:username', async (req, res) => {
   try {
-    await Ctrl.deleteAccount(req.body);
+    await Ctrl.deleteAccount(req.params.username);
 
     res.status(200).json({
       status: 200,
@@ -72,7 +72,7 @@ router.delete('/api/employees', async (req, res) => {
         message = 'Internal server error on deleting account';
         break;
       case 404:
-        message = 'User does not exists';
+        message = 'User does not exist';
         break;
     }
 
