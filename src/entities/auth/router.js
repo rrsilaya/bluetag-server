@@ -5,6 +5,7 @@ const router = Router();
 
 router.post('/api/login', async (req, res) => {
   try {
+    await Ctrl.checkUser(req.body.username);
     const user = await Ctrl.login(req.body);
     req.session.user = user;
 

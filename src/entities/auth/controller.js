@@ -1,24 +1,45 @@
 import db from '../../database';
 
-export const login = ({ username, password }) => {
+export const checkUser = username => {
   return new Promise((resolve, reject) => {
     const query = `
-      CALL getUser(:username)
+      CALL getUser(?)
     `;
 
-    db.query(query, { username }, (err, rows) => {
-      rows = rows[0];
+    db.query(query, [username], (err, res) => {
+      res = res[0];
 
       if (err) {
         console.log(err.message);
         return reject(500);
-      } else if (!rows.length) {
-        return reject(404); // no existing user
-      } else if (rows[0].password !== password) {
-        return reject(401);
       }
 
-      return resolve(rows[0]);
+      if (!res.length) return reject(404);
+
+      return resolve();
+    });
+  });
+};
+
+export const login = ({ username, password }) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      CALL checkCredentials(?, ?)
+    `;
+
+    const values = [username, password];
+    db.query(query, values, (err, res) => {
+      res = res[0];
+
+      if (err) {
+        console.log(err.message);
+        return reject(500);
+      }
+
+      if (!res.length) return reject(401);
+
+      console.log(res);
+      return resolve(res[0]);
     });
   });
 };

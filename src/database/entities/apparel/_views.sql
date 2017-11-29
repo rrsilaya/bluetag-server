@@ -30,7 +30,7 @@ CREATE VIEW sale_latest AS
 SELECT
   apparel,
   SUM(qty) AS sales,
-  MAX(timestamp) AS latestSale
+  MAX(date) AS latestSale
 FROM sale
 GROUP BY apparel;
 

@@ -40,23 +40,23 @@ FOR EACH ROW
 $$
 DELIMITER ;
 
--- On Edit
-DROP TRIGGER IF EXISTS editApparel_log;
-DELIMITER $$
-CREATE TRIGGER editApparel_log
-AFTER UPDATE ON apparel
-FOR EACH ROW
-  BEGIN
-    CALL log(
-      'edit_apparel',
-      CONCAT(
-        "Apparel: ",
-        OLD.apparel,
-        "Stock No.: ",
-        OLD.id
-      ),
-      NEW.EMPLOYEE
-    );
-  END;
-$$
-DELIMITER ;
+-- -- On Edit
+-- DROP TRIGGER IF EXISTS editApparel_log;
+-- DELIMITER $$
+-- CREATE TRIGGER editApparel_log
+-- AFTER UPDATE ON apparel
+-- FOR EACH ROW
+--   BEGIN
+--     CALL log(
+--       'edit_apparel',
+--       CONCAT(
+--         "Apparel: ",
+--         OLD.apparel,
+--         "Stock No.: ",
+--         OLD.id
+--       ),
+--       NEW.EMPLOYEE
+--     );
+--   END;
+-- $$
+-- DELIMITER ;

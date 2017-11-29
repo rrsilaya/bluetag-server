@@ -11,7 +11,7 @@ USE bluetag;
 -- Database Definition
 CREATE TABLE employee (
 	`username` VARCHAR(10) NOT NULL,
-  `password` VARCHAR(24) NOT NULL, -- to be adjusted (for encyrption)
+  `password` BLOB NOT NULL,
   `type` ENUM(
     'manager',
     'employee'

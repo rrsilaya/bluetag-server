@@ -1,19 +1,6 @@
 import db from '../../database';
 import { getOffset } from '../_utils/';
 
-export const countUsers = () => {
-  return new Promise((resolve, reject) => {
-    const query = `
-      SELECT COUNT(*) AS total
-      FROM employee
-    `;
-
-    db.query(query, null, (err, result) => {
-      return resolve(result[0].total);
-    });
-  });
-};
-
 export const getUsers = page => {
   return new Promise((resolve, reject) => {
     const query = `
