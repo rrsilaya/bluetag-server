@@ -1,18 +1,24 @@
 import { getOffset } from '../_utils/';
 import db from '../../database';
 
-export const getApparel = (page, { category = 'brand', order }) => {
+export const getApparel = (
+  page,
+  { category = 'brand', order, classification }
+) => {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT *
-      FROM apparel_discount_sale_stock
+      FROM ??
       ORDER BY ??
       ${order === 'desc' ? 'DESC' : 'ASC'}
       LIMIT 10
       OFFSET ?
     `;
 
-    const values = [category, getOffset(10, page)];
+    const table = classification
+      ? classification === 'fast' ? 'apparel_fast' : 'apparel_slow'
+      : 'apparel_discount_sale_stock';
+    const values = [table, category, getOffset(10, page)];
 
     db.query(query, values, (err, rows) => {
       if (err) {
@@ -100,7 +106,7 @@ export const addApparel = ({
     ];
     db.query(query, values, (err, result) => {
       if (err) {
-        if (err.code === 1062) {
+        if (err.code === 'ER_DUP_ENTRY') {
           return reject(400);
         }
 

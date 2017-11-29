@@ -113,7 +113,7 @@ CREATE TABLE discount (
 
 CREATE TABLE sale (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `timestamp` TIMESTAMP NOT NULL,
+  `date` DATE NOT NULL,
   `qty` INT DEFAULT 1 NOT NULL,
   `apparel` VARCHAR(17) NOT NULL,
   `employee` VARCHAR(10) NOT NULL,
@@ -139,7 +139,7 @@ CREATE PROCEDURE log (
 BEGIN
   INSERT INTO log VALUES (
     UUID_SHORT(),
-    NOW(),
+    CURDATE(),
     action,
     notes,
     employee
