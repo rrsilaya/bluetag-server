@@ -49,10 +49,7 @@ CREATE TABLE orderRequest (
   `employee` VARCHAR(10) NOT NULL,
 
   CONSTRAINT `orderRequest_id_pk`
-    PRIMARY KEY(`id`),
-  CONSTRAINT `orderRequest_employee_fk`
-    FOREIGN KEY(`employee`)
-    REFERENCES employee(`username`)
+    PRIMARY KEY(`id`)
 );
 
 CREATE TABLE orderRequestItem (
@@ -96,10 +93,7 @@ CREATE TABLE stock (
     REFERENCES apparel(`id`),
   CONSTRAINT `stock_delivery_fk`
     FOREIGN KEY(`delivery`)
-    REFERENCES orderRequest(`id`),
-  CONSTRAINT `stock_employee_fk`
-    FOREIGN KEY(`employee`)
-    REFERENCES employee(`username`)
+    REFERENCES orderRequest(`id`)
 );
 
 CREATE TABLE discount (
@@ -114,10 +108,7 @@ CREATE TABLE discount (
     PRIMARY KEY(`id`),
   CONSTRAINT `discount_apparel_fk`
     FOREIGN KEY(`apparel`)
-    REFERENCES apparel(`id`),
-  CONSTRAINT `discount_employee_fk`
-    FOREIGN KEY(`employee`)
-    REFERENCES employee(`username`)
+    REFERENCES apparel(`id`)
 );
 
 CREATE TABLE sale (
@@ -131,10 +122,7 @@ CREATE TABLE sale (
     PRIMARY KEY(`id`),
   CONSTRAINT `sale_aparel_pk`
     FOREIGN KEY(`apparel`)
-    REFERENCES apparel(`id`),
-  CONSTRAINT `sale_employee_fk`
-    FOREIGN KEY(`employee`)
-    REFERENCES employee(`username`)
+    REFERENCES apparel(`id`)
 );
 
 -- Privileges
