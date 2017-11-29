@@ -20,8 +20,8 @@ router.get('/api/apparels/:page', async (req, res) => {
         status: 200,
         message: 'Successfully fetched apparel',
         data: {
-          page: parseInt(req.params.page),
-          pages,
+          page: req.query.q && parseInt(req.params.page),
+          pages: req.query.q && pages,
           apparel
         }
       });

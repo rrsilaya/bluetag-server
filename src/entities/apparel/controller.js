@@ -3,12 +3,13 @@ import db from '../../database';
 
 export const getApparel = (
   page,
-  { category = 'brand', order, classification }
+  { category = 'brand', order, classification, label = 'id', q = '' }
 ) => {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT *
       FROM ??
+      WHERE ?? LIKE ?
       ORDER BY ??
       ${order === 'desc' ? 'DESC' : 'ASC'}
       LIMIT 10
@@ -18,7 +19,7 @@ export const getApparel = (
     const table = classification
       ? classification === 'fast' ? 'apparel_fast' : 'apparel_slow'
       : 'apparel_discount_sale_stock';
-    const values = [table, category, getOffset(10, page)];
+    const values = [table, label, `${q}%`, category, getOffset(10, page)];
 
     db.query(query, values, (err, rows) => {
       if (err) {
