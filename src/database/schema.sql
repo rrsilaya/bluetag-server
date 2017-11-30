@@ -73,8 +73,8 @@ CREATE TABLE apparel (
   `type` VARCHAR(30) NOT NULL,
   `size` VARCHAR(10) NOT NULL,
   `color` VARCHAR(20),
-  `qty` INT NOT NULL,
   `price` DECIMAL NOT NULL,
+  `employee` VARCHAR(10) NOT NULL,
 
   CONSTRAINT `apparel_id_pk`
     PRIMARY KEY(`id`)
@@ -92,7 +92,7 @@ CREATE TABLE stock (
     PRIMARY KEY(`id`),
   CONSTRAINT `stock_apparel_fk`
     FOREIGN KEY(`apparel`)
-    REFERENCES apparel(`id`),
+    REFERENCES apparel(`id`)
     ON DELETE CASCADE
 );
 

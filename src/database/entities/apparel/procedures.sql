@@ -33,9 +33,7 @@ CREATE PROCEDURE addApparel (
   IN type VARCHAR(30),
   IN size VARCHAR(10),
   IN color VARCHAR(20),
-  IN qty INT,
   IN price DECIMAL,
-  IN timestamp TIMESTAMP,
   IN employee VARCHAR(10))
 BEGIN
   INSERT INTO apparel VALUES (
@@ -44,16 +42,7 @@ BEGIN
     type,
     size,
     color,
-    qty,
-    price
-  ) ON DUPLICATE KEY UPDATE
-    apparel.price = price,
-    apparel.qty = apparel.qty + qty;
-  INSERT INTO stock VALUES (
-    DEFAULT,
-    qty,
-    timestamp,
-    id,
+    price,
     employee
   );
 END;

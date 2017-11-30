@@ -25,8 +25,7 @@ export const getUsers = page => {
 export const createAccount = ({ username, password, type }) => {
   return new Promise((resolve, reject) => {
     const query = `
-      INSERT INTO employee
-      VALUES (?, ?, ?)
+      CALL createAccount(?, ?, ?)
     `;
 
     const values = [username, password, type];
@@ -47,8 +46,7 @@ export const createAccount = ({ username, password, type }) => {
 export const deleteAccount = username => {
   return new Promise((resolve, reject) => {
     const query = `
-      DELETE FROM employee
-      WHERE username = ?
+      CALL deleteUser(?)
     `;
 
     db.query(query, [username], (err, result) => {

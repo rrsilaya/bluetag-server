@@ -49,3 +49,15 @@ BEGIN
 END;
 $$
 DELIMITER ;
+
+-- Delete User
+DROP PROCEDURE IF EXISTS deleteUser;
+DELIMITER $$
+CREATE PROCEDURE deleteUser (IN user VARCHAR(10))
+BEGIN
+  DELETE FROM employee
+  WHERE username = user;
+END;
+$$
+DELIMITER ;
+

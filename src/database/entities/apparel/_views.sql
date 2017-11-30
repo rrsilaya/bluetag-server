@@ -19,6 +19,7 @@ SELECT
   qty,
   MAX(deliveryDate) AS deliveryDate,
   apparel,
+  SUM(qty) AS totalStock,
   delivery,
   employee
 FROM stock
@@ -69,7 +70,16 @@ ON apparel.id = sale.apparel;
 DROP VIEW IF EXISTS apparel_discount_sale_stock;
 CREATE VIEW apparel_discount_sale_stock AS
 SELECT
-  apparel.*,
+  apparel.id,
+  brand,
+  type,
+  size,
+  color,
+  IFNULL(totalStock, 0) AS qty,
+  price,
+  sellingPrice,
+  sales,
+  latestSale,
   deliveryDate
 FROM apparel_discount_sale AS apparel
 LEFT JOIN
