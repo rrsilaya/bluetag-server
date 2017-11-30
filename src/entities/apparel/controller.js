@@ -75,55 +75,45 @@ export const getApparelByIdInfo = id => {
 };
 
 export const addApparel = (
-  employee = 'admin',
-  { id, brand, type, size, color, qty, price, timestamp }
+  employee,
+  { id, brand, type, size, color, price }
 ) => {
   return new Promise((resolve, reject) => {
     const query = `
-      CALL addApparel(
-        ?, ?, ?,
-        ?, ?, ?,
-        ?, ?, ?
-      );
+      CALL addApparel(?, ?, ?, ?, ?, ?, ?)
     `;
 
-    const values = [
-      id,
-      brand,
-      type,
-      size,
-      color,
-      qty,
-      price,
-      timestamp,
-      employee
-    ];
-    db.query(query, values, (err, result) => {
-      if (err) {
-        if (err.code === 'ER_DUP_ENTRY') {
-          return reject(400);
-        }
+    const values = [id, brand, type, size, color, price, employee];
 
+    db.query(query, values, (err, res) => {
+      if (err) {
+        if (err.code === 'ER_DUP_ENTRY') return reject(400);
+
+        console.log(err.message);
         return reject(500);
       }
 
-      return resolve(result);
+      console.log(res);
+      return resolve(res);
     });
   });
 };
 
-export const editApparel = ({ id, brand, type, size, color, price }) => {
+export const editApparel = (
+  employee,
+  { id, brand, type, size, color, price }
+) => {
   return new Promise((resolve, reject) => {
     const query = `
       UPDATE apparel
       SET
         brand = ?, type = ?,
         size = ?, color = ?,
-        price = ?
+        price = ?, employee = ?
       WHERE id = ?
     `;
 
-    const values = [brand, type, size, color, price, id];
+    const values = [brand, type, size, color, price, employee, id];
     db.query(query, values, (err, row) => {
       if (err) {
         console.log(err.message);

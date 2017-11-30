@@ -60,12 +60,12 @@ router.get('/api/apparel/:id', async (req, res) => {
 
 router.post('/api/apparel', async (req, res) => {
   try {
-    const apparel = await Ctrl.addApparel(req.session.user.username, req.body);
+    await Ctrl.addApparel(req.session.user.username, req.body);
 
     res.status(200).json({
       status: 200,
       message: 'Successfully added apparel',
-      data: apparel
+      data: req.body
     });
   } catch (status) {
     let message = '';
@@ -105,7 +105,7 @@ router.put('/api/apparel/:id', async (req, res) => {
 
   try {
     const newApparel = { ...apparel, ...req.body, id: req.params.id };
-    await Ctrl.editApparel(newApparel);
+    await Ctrl.editApparel(req.session.user.username, newApparel);
 
     res.status(200).json({
       status: 200,
