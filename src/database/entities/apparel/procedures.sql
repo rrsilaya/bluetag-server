@@ -66,10 +66,6 @@ DELIMITER $$
 CREATE PROCEDURE removeApparel (
   IN id VARCHAR(17))
 BEGIN
-  DELETE FROM stock
-  WHERE stock.apparel = id;
-  DELETE FROM discount
-  WHERE discount.apparel = id;
   DELETE FROM apparel
   WHERE apparel.id = id;
 END;

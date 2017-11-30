@@ -27,7 +27,7 @@ CREATE TABLE log (
   `id` VARCHAR(17) NOT NULL,
   `timestamp` TIMESTAMP NOT NULL,
   `action` VARCHAR(30) NOT NULL,
-  `notes` TEXT NOT NULL, -- specifies other details in the action
+  `affected_id` VARCHAR(17) NOT NULL, -- specifies other details in the action
   `employee` VARCHAR(10) NOT NULL,
 
   CONSTRAINT `audit_id_pk`
@@ -35,6 +35,7 @@ CREATE TABLE log (
   CONSTRAINT `audit_employee_fk`
     FOREIGN KEY(`employee`)
     REFERENCES employee(`username`)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE orderRequest (
@@ -63,6 +64,7 @@ CREATE TABLE orderRequestItem (
   CONSTRAINT `orderRequestItem_id_fk`
     FOREIGN KEY(`request`)
     REFERENCES orderRequest(`id`)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE apparel (
@@ -91,9 +93,7 @@ CREATE TABLE stock (
   CONSTRAINT `stock_apparel_fk`
     FOREIGN KEY(`apparel`)
     REFERENCES apparel(`id`),
-  CONSTRAINT `stock_delivery_fk`
-    FOREIGN KEY(`delivery`)
-    REFERENCES orderRequest(`id`)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE discount (
@@ -109,6 +109,7 @@ CREATE TABLE discount (
   CONSTRAINT `discount_apparel_fk`
     FOREIGN KEY(`apparel`)
     REFERENCES apparel(`id`)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE sale (
@@ -123,6 +124,7 @@ CREATE TABLE sale (
   CONSTRAINT `sale_aparel_pk`
     FOREIGN KEY(`apparel`)
     REFERENCES apparel(`id`)
+    ON DELETE CASCADE
 );
 
 -- Privileges
@@ -134,14 +136,14 @@ DROP PROCEDURE IF EXISTS log;
 DELIMITER $$
 CREATE PROCEDURE log (
   IN action VARCHAR(30),
-  IN notes TEXT,
+  IN id VARCHAR(17),
   IN employee VARCHAR(10))
 BEGIN
   INSERT INTO log VALUES (
     UUID_SHORT(),
-    CURDATE(),
+    NOW(),
     action,
-    notes,
+    id,
     employee
   );
 END;

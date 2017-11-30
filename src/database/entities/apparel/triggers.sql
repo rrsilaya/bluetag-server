@@ -7,12 +7,7 @@ FOR EACH ROW
   BEGIN
     CALL log(
       'add_apparel_stock',
-      CONCAT(
-        "Apparel: ",
-        NEW.apparel,
-        "; Stock No.: ",
-        NEW.id
-      ),
+      NEW.id,
       NEW.employee
     );
   END;
@@ -28,12 +23,7 @@ FOR EACH ROW
   BEGIN
     CALL log(
       'remove_apparel',
-      CONCAT(
-        "Apparel: ",
-        OLD.apparel,
-        "Stock No.: ",
-        OLD.id
-      ),
+      OLD.apparel,
       OLD.employee
     );
   END;
