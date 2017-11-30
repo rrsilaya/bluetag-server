@@ -74,17 +74,10 @@ export const getApparelByIdInfo = id => {
   });
 };
 
-export const addApparel = ({
-  id,
-  brand,
-  type,
-  size,
-  color,
-  qty,
-  price,
-  timestamp,
-  employee
-}) => {
+export const addApparel = (
+  employee = 'admin',
+  { id, brand, type, size, color, qty, price, timestamp }
+) => {
   return new Promise((resolve, reject) => {
     const query = `
       CALL addApparel(
