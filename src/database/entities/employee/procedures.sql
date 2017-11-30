@@ -16,6 +16,11 @@ BEGIN
     AES_ENCRYPT(password, 'cHwp1zx2PDrEw'),
     type
   );
+  SELECT
+    employee.username,
+    employee.type
+  FROM employee
+  WHERE employee.username = username;
 END;
 $$
 DELIMITER ;

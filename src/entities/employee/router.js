@@ -35,11 +35,12 @@ router.get('/api/employees/:page', async (req, res) => {
 
 router.post('/api/employee', async (req, res) => {
   try {
-    const username = await Ctrl.createAccount(req.body);
+    const user = await Ctrl.createAccount(req.body);
+
     res.status(200).json({
       status: 200,
       message: 'Successfully created account',
-      data: req.body
+      data: user
     });
   } catch (status) {
     let message = '';

@@ -60,12 +60,12 @@ router.get('/api/apparel/:id', async (req, res) => {
 
 router.post('/api/apparel', async (req, res) => {
   try {
-    await Ctrl.addApparel(req.session.user.username, req.body);
+    const apparel = await Ctrl.addApparel(req.session.user.username, req.body);
 
     res.status(200).json({
       status: 200,
       message: 'Successfully added apparel',
-      data: req.body
+      data: apparel
     });
   } catch (status) {
     let message = '';
@@ -84,38 +84,32 @@ router.post('/api/apparel', async (req, res) => {
 });
 
 router.put('/api/apparel/:id', async (req, res) => {
-  let apparel;
-
   try {
-    apparel = await Ctrl.getApparelById(req.params.id);
+    const item = await Ctrl.getApparelById(req.params.id);
+    const apparel = await Ctrl.editApparel(
+      req.session.user.username,
+      req.params.id,
+      { ...item, ...req.body }
+    );
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully updated apparel',
+      data: apparel
+    });
   } catch (status) {
     let message = '';
 
     switch (status) {
       case 404:
-        message = 'Apparel does not exists';
+        message = 'Apparel does not exist';
         break;
       case 500:
-        message = 'Internal server error while finding apparel';
+        message = 'Internal server error while updating apparel';
         break;
     }
 
     res.status(status).json({ status, message });
-  }
-
-  try {
-    const newApparel = { ...apparel, ...req.body, id: req.params.id };
-    await Ctrl.editApparel(req.session.user.username, newApparel);
-
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully edited apparel',
-      data: newApparel
-    });
-  } catch (status) {
-    res
-      .status(status)
-      .send({ status, message: 'Internal server error while editing apparel' });
   }
 });
 

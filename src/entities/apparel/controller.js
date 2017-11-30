@@ -93,34 +93,29 @@ export const addApparel = (
         return reject(500);
       }
 
-      console.log(res);
-      return resolve(res);
+      return resolve(res[0][0]);
     });
   });
 };
 
 export const editApparel = (
   employee,
-  { id, brand, type, size, color, price }
+  id,
+  { brand, type, size, color, price }
 ) => {
   return new Promise((resolve, reject) => {
     const query = `
-      UPDATE apparel
-      SET
-        brand = ?, type = ?,
-        size = ?, color = ?,
-        price = ?, employee = ?
-      WHERE id = ?
+      CALL(?, ?, ?, ?, ?, ?, ?)
     `;
 
-    const values = [brand, type, size, color, price, employee, id];
+    const values = [id, brand, type, size, color, price, employee];
     db.query(query, values, (err, row) => {
       if (err) {
         console.log(err.message);
         return reject(500);
       }
 
-      return resolve(row[0]);
+      return resolve(row[0][0]);
     });
   });
 };

@@ -98,14 +98,12 @@ export const updateDiscount = (id, employee, { rate, isActive }) => {
 
     const values = [id, rate, isActive, employee];
     db.query(query, values, (err, res) => {
-      res = res[0];
-
       if (err) {
         console.log(err.message);
         return reject(500);
       }
 
-      return resolve(res[0]);
+      return resolve(res[0][0]);
     });
   });
 };

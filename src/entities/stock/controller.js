@@ -57,7 +57,7 @@ export const addStock = (employee, { qty, apparel, delivery }) => {
         return reject(500);
       }
 
-      return resolve(res.insertId);
+      return resolve(res[0][0]);
     });
   });
 };
@@ -91,7 +91,7 @@ export const editStock = (employee, id, { qty }) => {
         return reject(500);
       }
 
-      return resolve();
+      return resolve(res[0][0]);
     });
   });
 };

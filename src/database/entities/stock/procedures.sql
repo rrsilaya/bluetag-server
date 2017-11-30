@@ -7,7 +7,7 @@ CREATE PROCEDURE addStock (
   IN delivery VARCHAR(17),
   IN employee VARCHAR(10))
 BEGIN
-  INSERT INTO apparel VALUES (
+  INSERT INTO stock VALUES (
     DEFAULT,
     qty,
     NOW(),
@@ -15,6 +15,12 @@ BEGIN
     delivery,
     employee
   );
+  SELECT
+    stock.id, stock.qty,
+    stock.deliveryDate, stock.apparel,
+    stock.delivery
+  FROM stock
+  WHERE stock.id = id;
 END;
 $$
 DELIMITER ;
@@ -33,6 +39,12 @@ BEGIN
     qty = num,
     employee = emp
   WHERE id = stock_id;
+  SELECT
+    stock.id, stock.qty,
+    stock.deliveryDate, stock.apparel,
+    stock.delivery
+  FROM stock
+  WHERE stock.id = stock_id;
 END;
 $$
 DELIMITER ;

@@ -38,7 +38,7 @@ export const createAccount = ({ username, password, type }) => {
         return reject(500);
       }
 
-      return resolve();
+      return resolve(result[0][0]);
     });
   });
 };
