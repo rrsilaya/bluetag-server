@@ -1,12 +1,12 @@
 -- On Addition
-DROP TRIGGER IF EXISTS newStock_log;
+DROP TRIGGER IF EXISTS newApparel_log;
 DELIMITER $$
-CREATE TRIGGER newStock_log
-AFTER INSERT ON stock
+CREATE TRIGGER newApparel_log
+AFTER INSERT ON apparel
 FOR EACH ROW
   BEGIN
     CALL log(
-      'add_apparel_stock',
+      'add_apparel',
       NEW.id,
       NEW.employee
     );
@@ -30,23 +30,19 @@ FOR EACH ROW
 $$
 DELIMITER ;
 
--- -- On Edit
--- DROP TRIGGER IF EXISTS editApparel_log;
--- DELIMITER $$
--- CREATE TRIGGER editApparel_log
--- AFTER UPDATE ON apparel
--- FOR EACH ROW
---   BEGIN
---     CALL log(
---       'edit_apparel',
---       CONCAT(
---         "Apparel: ",
---         OLD.apparel,
---         "Stock No.: ",
---         OLD.id
---       ),
---       NEW.EMPLOYEE
---     );
---   END;
--- $$
--- DELIMITER ;
+-- On Edit
+DROP TRIGGER IF EXISTS editApparel_log;
+DELIMITER $$
+CREATE TRIGGER editApparel_log
+AFTER UPDATE ON apparel
+FOR EACH ROW
+  BEGIN
+    CALL log(
+      'edit_apparel',
+      OLD.id,
+      NEW.employee
+    );
+  END;
+$$
+DELIMITER ;
+
