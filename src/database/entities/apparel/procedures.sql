@@ -53,8 +53,12 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS removeApparel;
 DELIMITER $$
 CREATE PROCEDURE removeApparel (
-  IN id VARCHAR(17))
+  IN id VARCHAR(17),
+  IN emp VARCHAR(10))
 BEGIN
+  UPDATE FROM apparel
+  SET employee = emp
+  WHERE apparel.id = id;
   DELETE FROM apparel
   WHERE apparel.id = id;
 END;

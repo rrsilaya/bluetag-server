@@ -121,7 +121,7 @@ router.put('/api/apparel/:id', async (req, res) => {
 
 router.delete('/api/apparel/:id', async (req, res) => {
   try {
-    await Ctrl.removeApparel(req.params.id);
+    await Ctrl.removeApparel(req.params.id, req.session.user.username);
 
     res.status(200).json({
       status: 200,

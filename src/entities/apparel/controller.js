@@ -125,13 +125,13 @@ export const editApparel = (
   });
 };
 
-export const removeApparel = id => {
+export const removeApparel = (id, employee) => {
   return new Promise((resolve, reject) => {
     const query = `
-      CALL removeApparel(?)
+      CALL removeApparel(?, ?)
     `;
 
-    db.query(query, [id], err => {
+    db.query(query, [id, employee], err => {
       if (err) {
         console.log(err.message);
         return reject(500);
