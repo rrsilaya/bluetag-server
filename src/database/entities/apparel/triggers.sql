@@ -18,12 +18,12 @@ DELIMITER ;
 DROP TRIGGER IF EXISTS removeApparel_log;
 DELIMITER $$
 CREATE TRIGGER removeApparel_log
-BEFORE DELETE ON stock
+BEFORE DELETE ON apparel
 FOR EACH ROW
   BEGIN
     CALL log(
       'remove_apparel',
-      OLD.apparel,
+      OLD.id,
       OLD.employee
     );
   END;

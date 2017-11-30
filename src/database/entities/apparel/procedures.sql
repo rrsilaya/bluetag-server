@@ -56,7 +56,7 @@ CREATE PROCEDURE removeApparel (
   IN id VARCHAR(17),
   IN emp VARCHAR(10))
 BEGIN
-  UPDATE FROM apparel
+  UPDATE apparel
   SET employee = emp
   WHERE apparel.id = id;
   DELETE FROM apparel
