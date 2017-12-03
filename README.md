@@ -60,7 +60,8 @@ All payload that will be sent by the server will be of the same structure as fol
   - [Get Apparel List](#get-apparelspage)
   - [Get Apparel by ID](#get-apparelid)
   - [Add Apparel](#post-apparel)
-  - [Add Apparel](#put-apparelid)
+  - [Edit Apparel](#put-apparelid)
+  - [Delete Apparel](#delete-apparelid)
 * [Authentication](#authentication)
   - [Login](#post-login)
   - [Logout](#post-logout)
@@ -126,7 +127,7 @@ All payload that will be sent by the server will be of the same structure as fol
 * price 
 
 ##### `DELETE /apparel/:id`
-*No other required information.*
+***Warning:*** `ON DELETE CASCADE` *is enabled for apparel entity.*
 
 ### Authentication
 #### `POST /login`

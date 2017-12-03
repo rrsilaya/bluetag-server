@@ -27,7 +27,20 @@ router.use((req, res, next) => {
 router.use(employeeRouter);
 router.use(apparelRouter);
 router.use(orderRouter);
-router.use(logRouter);
 router.use(discountRouter);
+
+/* Privilege Middleware */
+router.use((req, res, next) => {
+  if (req.session.user.type === 'manager') {
+    return next();
+  }
+
+  res.status(401).json({
+    status: 401,
+    message: 'You have no correct privilege to access this data'
+  });
+});
+
+router.use(logRouter);
 
 export default router;
