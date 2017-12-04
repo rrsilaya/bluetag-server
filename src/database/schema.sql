@@ -58,6 +58,7 @@ CREATE TABLE orderRequestItem (
   `item` VARCHAR(30) NOT NULL,
   `qty` INT DEFAULT 1 NOT NULL,
   `request` VARCHAR(17) NOT NULL,
+  `employee` VARCHAR(10) NOT NULL,
 
   CONSTRAINT `orderRequestItem_id_pk`
     PRIMARY KEY(`id`),

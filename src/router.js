@@ -7,6 +7,7 @@ import apparelRouter from './entities/apparel/router';
 import orderRouter from './entities/order/router';
 import logRouter from './entities/log/router';
 import discountRouter from './entities/discount/router';
+import orderItemRouter from './entities/orderRequestItem/router';
 
 const router = Router();
 
@@ -27,6 +28,7 @@ router.use((req, res, next) => {
 router.use(employeeRouter);
 router.use(apparelRouter);
 router.use(orderRouter);
+router.use(orderItemRouter);
 router.use(discountRouter);
 
 /* Privilege Middleware */
