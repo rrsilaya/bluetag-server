@@ -52,17 +52,31 @@ export const getOrderRequestById = id => {
   });
 };
 
-export const editOrderRequest = (id, { status, company }) => {
+export const editOrderRequest = (id, employee, { status, company }) => {
   return new Promise((resolve, reject) => {
     const query = `
-      UPDATE orderRequest
-      SET
-        status = ?,
-        company = ?
-      WHERE id = ?
+      CALL editOrder(?, ?, ?, ?)
     `;
 
-    const values = [status, company, id];
+    const values = [id, status, company, employee];
+    db.query(query, values, (err, res) => {
+      if (err) {
+        console.log(err.message);
+        return reject(500);
+      }
+
+      return resolve(res[0][0]);
+    });
+  });
+};
+
+export const deleteOrderRequest = (id, employee) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      CALL deleteOrder(?, ?)
+    `;
+
+    const values = [id, employee];
     db.query(query, values, (err, res) => {
       if (err) {
         console.log(err.message);

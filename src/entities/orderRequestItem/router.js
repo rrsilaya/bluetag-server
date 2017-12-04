@@ -49,4 +49,52 @@ router.post('/api/item/:request', async (req, res) => {
   }
 });
 
+router.put('/api/item/:id', async (req, res) => {
+  try {
+    const item = await Ctrl.getItemById(req.params.id);
+    const edited = await Ctrl.editRequestItem(
+      req.params.id,
+      req.session.user.username,
+      req.body
+    );
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully edited order item',
+      data: edited
+    });
+  } catch (status) {
+    let message = '';
+
+    switch (status) {
+      case 404:
+        message = 'Order item does not exist';
+        break;
+      case 500:
+        message = 'Internal server error while editing order item';
+        break;
+    }
+
+    res.status(status).json({ status, message });
+  }
+});
+
+router.delete('/api/item/:id', async (req, res) => {
+  try {
+    await Ctrl.deleteRequestItem(req.params.id, req.session.user.username);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully deleted order item'
+    });
+  } catch (status) {
+    res
+      .status(status)
+      .json({
+        status,
+        message: 'Internal server error while deleting order item'
+      });
+  }
+});
+
 export default router;

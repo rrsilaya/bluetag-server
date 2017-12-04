@@ -60,18 +60,40 @@ router.get('/api/order/:id', async (req, res) => {
 
 router.put('/api/order/:id', async (req, res) => {
   try {
-    await Ctrl.editOrderRequest(req.params.id, req.body);
-    const edited = await Ctrl.getOrderRequestById(req.params.id);
+    const request = await Ctrl.getOrderRequestById(req.params.id);
+    const order = await Ctrl.editOrderRequest(
+      req.params.id,
+      req.session.user.username,
+      { ...request, ...req.body }
+    );
 
     res.status(200).json({
       status: 200,
       message: 'Successfully edited order',
-      data: edited
+      data: order
     });
   } catch (status) {
     res
       .status(status)
       .json({ status, message: 'Internal server error while editing order' });
+  }
+});
+
+router.delete('/api/order/:id', async (req, res) => {
+  try {
+    await Ctrl.deleteOrderRequest(req.params.id, req.session.user.username);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully deleted order request'
+    });
+  } catch (status) {
+    res
+      .status(status)
+      .json({
+        status,
+        message: 'Internal server error while deleting order request'
+      });
   }
 });
 

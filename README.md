@@ -24,15 +24,16 @@
 ## Available Routes
 API root route is at `/api`.
 
-|  Entity  |                Route                |
-| -------- | ----------------------------------- |
-| apparel  | `/apparel`                          |
-| auth     | `/login` or `/logout` or `/session` |
-| discount | `/discount`                         |
-| employee | `/employee`                         |
-| log      | `/log`                              |
-| order    | `/order`                            |
-| stock    | `/stock`                            |
+|      Entity      |                Route                |
+|------------------|-------------------------------------|
+| apparel          | `/apparel`                          |
+| auth             | `/login` or `/logout` or `/session` |
+| discount         | `/discount`                         |
+| employee         | `/employee`                         |
+| log              | `/log`                              |
+| orderRequest     | `/order`                            |
+| orderRequestItem | `/item`                             |
+| stock            | `/stock`                            |
 
 > There are entities that are in plural which returns an array of that entity (i.e. apparel has `/apparels`).
 
@@ -83,6 +84,12 @@ All payload that will be sent by the server will be of the same structure as fol
   - [Get Orders List](#get-orderspage)
   - [Get Order by ID](#get-orderid)
   - [Edit Order](#put-orderid)
+  - [Delete Order](#delete-orderid)
+* [Order Item](#order-item)
+  - [Get Order Items per Request](#get-itemsrequest)
+  - [Add Order Item per Request](#post-itemrequest)
+  - [Edit Order Item](#put-itemid)
+  - [Delete Order Item](#delete-itemid)
 * [Stock](#stock)
   - [Get Stocks per Apparel](#get-stocksapparel)
   - [Add Stock](#post-stock)
@@ -210,6 +217,26 @@ All payload that will be sent by the server will be of the same structure as fol
 ##### Request Body (all are optional)
 * status
 * company
+
+#### `DELETE /order/:id`
+*No other required information.*
+
+### Order Item
+#### `GET /items/:request`
+*No other required information.*
+
+#### `POST /item/:request`
+##### Request Body
+* item
+* qty
+
+#### `PUT /item/:id`
+##### Request Body (all are optional)
+* item
+* qty
+
+#### `DELETE /item/:id`
+*No other required information.*
 
 ### Stock
 #### `GET /stocks/:apparel`

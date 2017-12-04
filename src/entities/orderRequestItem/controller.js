@@ -64,3 +64,39 @@ export const addRequestItem = (request, employee, { item, qty }) => {
     });
   });
 };
+
+export const editRequestItem = (id, employee, { item, qty }) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      CALL editOrderItem(?, ?, ?, ?)
+    `;
+
+    const values = [id, item, qty, employee];
+    db.query(query, values, (err, res) => {
+      if (err) {
+        console.log(err.message);
+        return reject(500);
+      }
+
+      return resolve(res[0][0]);
+    });
+  });
+};
+
+export const deleteRequestItem = (id, employee) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      CALL deleteOrderItem(?, ?)
+    `;
+
+    const values = [id, employee];
+    db.query(query, values, (err, res) => {
+      if (err) {
+        console.log(err.message);
+        return reject(500);
+      }
+
+      return resolve();
+    });
+  });
+};
