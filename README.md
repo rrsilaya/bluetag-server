@@ -90,6 +90,8 @@ All payload that will be sent by the server will be of the same structure as fol
   - [Add Order Item per Request](#post-itemrequest)
   - [Edit Order Item](#put-itemid)
   - [Delete Order Item](#delete-itemid)
+* [Statistics](#statistics)
+  - [Get Statistics](#get-statistics)
 * [Stock](#stock)
   - [Get Stocks per Apparel](#get-stocksapparel)
   - [Add Stock](#post-stock)
@@ -236,6 +238,10 @@ All payload that will be sent by the server will be of the same structure as fol
 * qty
 
 #### `DELETE /item/:id`
+*No other required information.*
+
+### Statistics
+#### `GET /statistics`
 *No other required information.*
 
 ### Stock

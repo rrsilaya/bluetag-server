@@ -38,7 +38,6 @@ export const login = ({ username, password }) => {
 
       if (!res.length) return reject(401);
 
-      console.log(res);
       return resolve(res[0]);
     });
   });
