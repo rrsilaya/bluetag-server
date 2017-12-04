@@ -33,6 +33,7 @@ API root route is at `/api`.
 | log              | `/log`                              |
 | orderRequest     | `/order`                            |
 | orderRequestItem | `/item`                             |
+| sale             | `/sale`                             |
 | stock            | `/stock`                            |
 
 > There are entities that are in plural which returns an array of that entity (i.e. apparel has `/apparels`).
@@ -90,6 +91,10 @@ All payload that will be sent by the server will be of the same structure as fol
   - [Add Order Item per Request](#post-itemrequest)
   - [Edit Order Item](#put-itemid)
   - [Delete Order Item](#delete-itemid)
+* [Sale](#sale)
+  - [Get Sales per Apparel](#get-salesapparel)
+  - [Add Sales per Apparel](#post-saleapparel)
+  - [Delete Sale](#delete-saleid)
 * [Statistics](#statistics)
   - [Get Statistics](#get-statistics)
 * [Stock](#stock)
@@ -238,6 +243,18 @@ All payload that will be sent by the server will be of the same structure as fol
 * qty
 
 #### `DELETE /item/:id`
+*No other required information.*
+
+### Sale
+#### `GET /sales/:apparel`
+*No other required information.*
+
+#### `POST /sale/:apparel`
+##### Request Body
+* qty
+* stock (stock id)
+
+#### `DELETE /sale/:id`
 *No other required information.*
 
 ### Statistics
