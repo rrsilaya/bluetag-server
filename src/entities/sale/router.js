@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
 
-import { getApparelById } from '../../apparel/controller';
-import { getStockById } from '../../stock/controller';
+import { getApparelById } from '../apparel/controller';
+import { getStockById } from '../stock/controller';
 
 const router = Router();
 
