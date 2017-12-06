@@ -105,7 +105,7 @@ export const editApparel = (
 ) => {
   return new Promise((resolve, reject) => {
     const query = `
-      CALL(?, ?, ?, ?, ?, ?, ?)
+      CALL updateApparel(?, ?, ?, ?, ?, ?, ?)
     `;
 
     const values = [id, brand, type, size, color, price, employee];
