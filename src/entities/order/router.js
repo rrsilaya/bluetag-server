@@ -58,6 +58,27 @@ router.get('/api/order/:id', async (req, res) => {
   }
 });
 
+router.post('/api/order', async (req, res) => {
+  try {
+    const request = await Ctrl.addOrderRequest(
+      req.session.user.username,
+      req.body
+    );
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully added order request'
+    });
+  } catch (status) {
+    res
+      .status(status)
+      .json({
+        status,
+        message: 'Internal server error while adding order request'
+      });
+  }
+});
+
 router.put('/api/order/:id', async (req, res) => {
   try {
     const request = await Ctrl.getOrderRequestById(req.params.id);
@@ -88,12 +109,10 @@ router.delete('/api/order/:id', async (req, res) => {
       message: 'Successfully deleted order request'
     });
   } catch (status) {
-    res
-      .status(status)
-      .json({
-        status,
-        message: 'Internal server error while deleting order request'
-      });
+    res.status(status).json({
+      status,
+      message: 'Internal server error while deleting order request'
+    });
   }
 });
 

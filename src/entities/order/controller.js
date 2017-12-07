@@ -56,6 +56,24 @@ export const getOrderRequestById = id => {
   });
 };
 
+export const addOrderRequest = (employee, { company }) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      CALL addOrder(SHORT_UUID(), ?, ?)
+    `;
+
+    const values = [company, employee];
+    db.query(query, values, (err, res) => {
+      if (err) {
+        console.log(err.message);
+        return reject(500);
+      }
+
+      return resolve(res[0][0]);
+    });
+  });
+};
+
 export const editOrderRequest = (id, employee, { status, company }) => {
   return new Promise((resolve, reject) => {
     const query = `
