@@ -23,7 +23,7 @@ export const getStockById = ({ id }) => {
   });
 };
 
-export const getStockByApparel = ({ id }) => {
+export const getStockByApparel = ({ apparel }) => {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT
@@ -33,7 +33,7 @@ export const getStockByApparel = ({ id }) => {
       WHERE apparel = ?
     `;
 
-    db.query(query, [id], (err, rows) => {
+    db.query(query, [apparel], (err, rows) => {
       if (err) {
         console.log(err.message);
         return reject(500);

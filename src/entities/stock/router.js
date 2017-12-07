@@ -37,7 +37,7 @@ router.post('/api/stock', async (req, res) => {
 
 router.delete('/api/stock/:id', async (req, res) => {
   try {
-    await Ctrl.deleteStock(id, req.session.user.username);
+    await Ctrl.deleteStock(req.params.id, req.session.user.username);
 
     res.status(200).json({
       status: 200,
