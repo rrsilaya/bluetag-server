@@ -1,16 +1,9 @@
 import db from '../../database';
 
-export const getSales = () => {
+export const getStats = () => {
   return new Promise((resolve, reject) => {
     const query = `
-      SELECT
-        MONTHNAME(date) AS month,
-        YEAR(date) AS year,
-        SUM(qty) AS qty
-      FROM sale
-      GROUP BY
-        MONTH(date),
-        YEAR(date)
+      SELECT * FROM statistics
     `;
 
     db.query(query, (err, rows) => {
