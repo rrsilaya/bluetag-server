@@ -13,23 +13,29 @@ router.get('/api/discounts/:apparel', async (req, res) => {
       data: discounts.map(d => ({ ...d, isActive: Boolean(d.isActive) }))
     });
   } catch (status) {
-    res
-      .status(status)
-      .json({
-        status,
-        message: 'Internal server error while fetching discount'
-      });
+    res.status(status).json({
+      status,
+      message: 'Internal server error while fetching discount'
+    });
   }
 });
 
 router.post('/api/discount/:apparel', async (req, res) => {
   try {
-    const discount = await Ctrl.addDiscount(
-      req.session.user.username,
-      req.params.apparel,
-      req.body
+    const { apparel } = req.body;
+
+    if (!Array.isArray(apparel)) {
+      res.status(400).json({
+        status: 400,
+        message: '`apparel` key should be a list of apparel ids'
+      });
+    }
+
+    const discount = apparel.map(
+      async id =>
+        await Ctrl.addDiscount(req.session.user.username, id, req.body)
     );
-    const item = await Ctrl.getDiscountById(discount);
+    const item = discount.map(async id => await Ctrl.getDiscountById(id));
 
     res.status(200).json({
       status: 200,
@@ -58,12 +64,10 @@ router.delete('/api/discount/:id', async (req, res) => {
       message: 'Successfully deleted discount'
     });
   } catch (status) {
-    res
-      .status(status)
-      .json({
-        status,
-        message: 'Internal server error while deleting discount'
-      });
+    res.status(status).json({
+      status,
+      message: 'Internal server error while deleting discount'
+    });
   }
 });
 
