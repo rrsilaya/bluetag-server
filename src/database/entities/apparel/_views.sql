@@ -94,7 +94,7 @@ ON apparel.id = stock.apparel;
 DROP VIEW IF EXISTS apparel_discounted;
 CREATE VIEW apparel_discounted AS
 SELECT *
-FROM apparel_discount
+FROM apparel_discount_sale_stock
 WHERE discount IS NOT NULL;
 
 -- Slow-moving Items
