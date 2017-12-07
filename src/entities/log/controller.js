@@ -1,17 +1,21 @@
 import db from '../../database';
 import { getOffset } from '../_utils/';
 
-export const getLogs = (page, { category = 'timestamp', order }) => {
+export const getLogs = (page, { category = 'timestamp', order, time }) => {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT *
       FROM log
+      WHERE
+        timestamp < ADDDATE(?, 1)
       ORDER BY ??
       ${order === 'asc' ? 'ASC' : 'DESC'}
       LIMIT 15 OFFSET ?
     `;
 
-    const values = [category, getOffset(15, page)];
+    const CURDATE = { toSqlString: () => 'CURDATE()' };
+
+    const values = [time || CURDATE, category, getOffset(15, page)];
     db.query(query, values, (err, rows) => {
       if (err) {
         console.log(err.message);
