@@ -47,7 +47,7 @@ export const getStockByApparel = ({ apparel }) => {
 export const addStock = (employee, { qty, apparel, delivery }) => {
   return new Promise((resolve, reject) => {
     const query = `
-      CALL addStock(SHORT_UUID(), ?, ?, ?, ?)
+      CALL addStock(UUID_SHORT(), ?, ?, ?, ?)
     `;
 
     const values = [qty, apparel, delivery, employee];
