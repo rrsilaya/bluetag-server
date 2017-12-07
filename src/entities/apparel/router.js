@@ -36,11 +36,15 @@ router.get('/api/apparels/:page', async (req, res) => {
 router.get('/api/apparel/:id', async (req, res) => {
   try {
     const apparel = await Ctrl.getApparelByIdInfo(req.params.id);
+    const classification = await Ctrl.getApparelClassification(req.params.id);
 
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched apparel information',
-      data: apparel
+      data: {
+        ...apparel,
+        classification
+      }
     });
   } catch (status) {
     let message = '';

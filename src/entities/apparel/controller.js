@@ -74,6 +74,36 @@ export const getApparelByIdInfo = id => {
   });
 };
 
+export const getApparelClassification = id => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT IF(
+        '340735286303805' IN (SELECT id FROM apparel_fast),
+        'fast-moving',
+        IF (
+          '340735286303805' IN (SELECT id FROM apparel_slow),
+          'slow-moving',
+          IF (
+            '340735286303805' IN (SELECT id FROM apparel_disposal),
+            'disposal',
+            ''
+          )
+        )
+      ) AS classification
+    `;
+
+    const values = [id, id, id];
+    db.query(query, values, (err, res) => {
+      if (err) {
+        console.log(err.message);
+        return reject(500);
+      }
+
+      return resolve(res[0].classification);
+    });
+  });
+};
+
 export const addApparel = (
   employee,
   { id, brand, type, size, color, price }
