@@ -13,13 +13,13 @@ export const getOrderRequest = (
         status,
         company
       FROM orderRequest
+      WHERE status LIKE ?
       ORDER BY ??
       ${order === 'asc' ? 'ASC' : 'DESC'}
-      WHERE status LIKE ?
       LIMIT ? OFFSET ?
     `;
 
-    const values = [category, filter, 15, getOffset(15, page)];
+    const values = [filter, category, 15, getOffset(15, page)];
     db.query(query, values, (err, rows) => {
       if (err) {
         console.log(err.message);
