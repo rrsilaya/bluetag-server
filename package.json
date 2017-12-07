@@ -20,7 +20,7 @@
     "start": "backpack",
     "build": "backpack build",
     "seed": "cat ./src/database/schema.sql ./src/database/entities/**/*.sql | mysql -u root -p",
-    "populate": "mysql -u root -p < ./src/database/seed.sql",
+    "populate": "mysql -u root -p --silent < ./src/database/seed.sql",
     "precommit": "lint-staged",
     "prettify": "prettier --tab-width 2 --single-quote --jsx-bracket-same-line --write ./src/**/*.js"
   },

@@ -74,7 +74,7 @@ CREATE TABLE apparel (
   `type` VARCHAR(30) NOT NULL,
   `size` VARCHAR(10) NOT NULL,
   `color` VARCHAR(20),
-  `price` DECIMAL NOT NULL,
+  `price` DECIMAL(10, 2) NOT NULL,
   `employee` VARCHAR(10) NOT NULL,
 
   CONSTRAINT `apparel_id_pk`

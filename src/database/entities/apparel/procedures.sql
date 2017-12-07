@@ -7,7 +7,7 @@ CREATE PROCEDURE addApparel (
   IN type VARCHAR(30),
   IN size VARCHAR(10),
   IN color VARCHAR(20),
-  IN price DECIMAL,
+  IN price DECIMAL(10, 2),
   IN employee VARCHAR(10))
 BEGIN
   INSERT INTO apparel VALUES (
