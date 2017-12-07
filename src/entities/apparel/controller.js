@@ -17,7 +17,7 @@ export const getApparel = (
     `;
 
     const table = classification
-      ? classification === 'fast' ? 'apparel_fast' : 'apparel_slow'
+      ? `apparel_${classification}`
       : 'apparel_discount_sale_stock';
     const values = [table, label, `${q}%`, category, getOffset(10, page)];
 

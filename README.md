@@ -108,7 +108,7 @@ All payload that will be sent by the server will be of the same structure as fol
 ##### Available Queries
 * `category` - column to apply the sorting rules (DEFAULT: `brand`)
 * `order` - `asc` (ascending) or `desc` (descending)
-* `classification` - `fast` (fast-moving) or `slow` (slow-moving)
+* `classification` - `fast` (fast-moving), `slow` (slow-moving) or `disposal` (disposal items)
 * `label` - filter label (DEFAULT: `id`)
 * `q` - filter query
 

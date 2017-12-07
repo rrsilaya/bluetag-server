@@ -7,7 +7,8 @@ SELECT
   rate,
   isActive,
   apparel,
-  employee
+  employee,
+  COUNT(id) AS times
 FROM discount
 GROUP BY apparel;
 
@@ -45,6 +46,7 @@ SELECT
     rate,
     NULL
   ) AS discount,
+  IFNULL(times, 0) AS times,
   IF(
     isActive,
     ROUND((price - ((rate / 100) * price)), 2),
@@ -60,7 +62,7 @@ DROP VIEW IF EXISTS apparel_discount_sale;
 CREATE VIEW apparel_discount_sale AS
 SELECT
   apparel.*,
-  sales,
+  IFNULL(sales, 0) AS sales,
   latestSale
 FROM apparel_discount AS apparel
 LEFT JOIN sale_latest AS sale
@@ -78,6 +80,8 @@ SELECT
   IFNULL(totalStock, 0) AS qty,
   price,
   sellingPrice,
+  discount,
+  times,
   sales,
   latestSale,
   deliveryDate
@@ -103,10 +107,11 @@ WHERE
     NOW(),
     deliveryDate
   ) / 30 > 3
+AND sales = 0
 AND (
-  sales = 0
-  OR
-  sales IS NULL
+  times < 2
+  AND
+  discount IS NOT NULL
 );
 
 -- Fast-moving Items
@@ -114,13 +119,20 @@ DROP VIEW IF EXISTS apparel_fast;
 CREATE VIEW apparel_fast AS
 SELECT *
 FROM apparel_discount_sale_stock AS apparel
-WHERE
-  DATEDIFF(
-    NOW(),
-    deliveryDate
-  ) / 30 <= 3
-AND (
-  sales != 0
+WHERE DATEDIFF(
+  latestSale,
+  deliveryDate
+) / 30 > 0;
+
+-- Items for Disposal
+DROP VIEW IF EXISTS apparel_disposal;
+CREATE VIEW apparel_disposal AS
+SELECT *
+FROM apparel_discount_sale_stock AS apparel
+WHERE (
+  times >= 2
   AND
-  sales IS NOT NULL
+  discount IS NULL
+  AND
+  sales = 0
 );
