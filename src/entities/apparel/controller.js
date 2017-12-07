@@ -78,13 +78,13 @@ export const getApparelClassification = id => {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT IF(
-        '340735286303805' IN (SELECT id FROM apparel_fast),
+        ? IN (SELECT id FROM apparel_fast),
         'fast-moving',
         IF (
-          '340735286303805' IN (SELECT id FROM apparel_slow),
+          ? IN (SELECT id FROM apparel_slow),
           'slow-moving',
           IF (
-            '340735286303805' IN (SELECT id FROM apparel_disposal),
+            ? IN (SELECT id FROM apparel_disposal),
             'disposal',
             ''
           )
