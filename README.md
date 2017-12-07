@@ -207,14 +207,16 @@ All payload that will be sent by the server will be of the same structure as fol
 ### Order
 #### `GET /orders/:page`
 ##### Available Queries
-* category - column to apply the sorting rules (DEFAULT: `timestamp`)
+* `category` - column to apply the sorting rules (DEFAULT: `timestamp`)
 * `order` - `asc` (ascending) or `desc` (descending) (DEFAULT: `desc`)
+* `filter` - `cancelled`, `delivered`, or `pending`
 
 ##### Working Queries
 ```
 /api/orders/1
 /api/orders/1?category=id
 /api/orders/1?category=company&order=desc
+/api/orders/filter=cancelled
 ```
 
 #### `GET /order/:id`

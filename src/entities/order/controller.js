@@ -1,7 +1,10 @@
 import { getOffset } from '../_utils/';
 import db from '../../database';
 
-export const getOrderRequest = (page, { category = 'timestamp', order }) => {
+export const getOrderRequest = (
+  page,
+  { category = 'timestamp', order, filter = '%' }
+) => {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT
@@ -12,10 +15,11 @@ export const getOrderRequest = (page, { category = 'timestamp', order }) => {
       FROM orderRequest
       ORDER BY ??
       ${order === 'asc' ? 'ASC' : 'DESC'}
+      WHERE status LIKE ?
       LIMIT ? OFFSET ?
     `;
 
-    const values = [category, 15, getOffset(15, page)];
+    const values = [category, filter, 15, getOffset(15, page)];
     db.query(query, values, (err, rows) => {
       if (err) {
         console.log(err.message);
