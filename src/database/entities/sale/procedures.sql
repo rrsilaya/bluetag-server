@@ -1,6 +1,7 @@
 DROP PROCEDURE IF EXISTS addSale;
 DELIMITER $$
 CREATE PROCEDURE addSale (
+  IN id VARCHAR(17),
   IN qty INT,
   IN apparel VARCHAR(17),
   IN employee VARCHAR(10),
@@ -14,12 +15,19 @@ BEGIN
   WHERE stock.id = stock_id;
   INSERT INTO sale
   VALUES (
-    DEFAULT,
+    id,
     CURDATE(),
     qty,
     apparel,
     employee
   );
+  SELECT
+    sale.id,
+    sale.date,
+    sale.qty,
+    sale.apparel
+  FROM sale
+  WHERE sale.id = id;
 END;
 $$
 DELIMITER ;

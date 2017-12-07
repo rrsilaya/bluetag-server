@@ -43,7 +43,7 @@ export const getSaleById = id => {
 export const addSale = (apparel, employee, { qty, stock }) => {
   return new Promise((resolve, reject) => {
     const query = `
-      CALL addSale(?, ?, ?, ?)
+      CALL addSale(SHORT_UUID(), ?, ?, ?, ?)
     `;
 
     const values = [qty, apparel, employee, stock];

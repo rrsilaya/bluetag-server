@@ -39,7 +39,7 @@ CREATE TABLE log (
 );
 
 CREATE TABLE orderRequest (
-  `id` VARCHAR(17) NOT NULL,
+  `id` VARCHAR(17),
   `timestamp` TIMESTAMP NOT NULL,
   `status` ENUM(
     'pending',
@@ -82,7 +82,7 @@ CREATE TABLE apparel (
 );
 
 CREATE TABLE stock (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(17) NOT NULL,
   `qty` INT DEFAULT 1 NOT NULL,
   `deliveryDate` TIMESTAMP NOT NULL,
   `apparel` VARCHAR(17) NOT NULL,
@@ -114,7 +114,7 @@ CREATE TABLE discount (
 );
 
 CREATE TABLE sale (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(17) NOT NULL,
   `date` DATE NOT NULL,
   `qty` INT DEFAULT 1 NOT NULL,
   `apparel` VARCHAR(17) NOT NULL,

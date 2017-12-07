@@ -13,6 +13,13 @@ BEGIN
     orderRequestItem.qty = qty,
     orderRequestItem.employee = employee
   WHERE orderRequestItem.id = id;
+  SELECT
+    orderRequestItem.id,
+    orderRequestItem.item,
+    orderRequestItem.qty,
+    orderRequestItem.request
+  FROM orderRequestItem
+  WHERE orderRequestItem.id = id;
 END;
 $$
 DELIMITER ;
