@@ -19,7 +19,7 @@ export const getSales = () => {
         return reject(500);
       }
 
-      return resolve(rows);
+      return resolve(rows.reverse());
     });
   });
 };

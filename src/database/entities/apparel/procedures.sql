@@ -1,29 +1,3 @@
--- View All Apparel
-DROP PROCEDURE IF EXISTS viewAllApparel;
-DELIMITER $$
-CREATE PROCEDURE viewAllApparel (
-  IN limitD INT,
-  IN offsetD INT)
-BEGIN
-  SELECT *
-  FROM apparel_discount
-  LIMIT limitD OFFSET offsetD;
-END;
-$$
-DELIMITER ;
-
--- View Specific Apparel
-DROP PROCEDURE IF EXISTS viewApparel;
-DELIMITER $$
-CREATE PROCEDURE viewApparel (
-  IN id VARCHAR(17))
-BEGIN
-  SELECT * FROM apparel_discount
-  WHERE apparel.id = id;
-END;
-$$
-DELIMITER ;
-
 -- Add Apparel
 DROP PROCEDURE IF EXISTS addApparel;
 DELIMITER $$
