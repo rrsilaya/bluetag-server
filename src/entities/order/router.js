@@ -70,12 +70,10 @@ router.post('/api/order', async (req, res) => {
       message: 'Successfully added order request'
     });
   } catch (status) {
-    res
-      .status(status)
-      .json({
-        status,
-        message: 'Internal server error while adding order request'
-      });
+    res.status(status).json({
+      status,
+      message: 'Internal server error while adding order request'
+    });
   }
 });
 
@@ -87,6 +85,7 @@ router.put('/api/order/:id', async (req, res) => {
       req.session.user.username,
       { ...request, ...req.body }
     );
+    console.log(req.body.status);
 
     res.status(200).json({
       status: 200,

@@ -31,7 +31,7 @@ DROP PROCEDURE IF EXISTS editOrder;
 DELIMITER $$
 CREATE PROCEDURE editOrder (
   IN id VARCHAR(17),
-  IN status ENUM('pending', 'delivered, cancelled'),
+  IN status ENUM('pending', 'delivered', 'cancelled'),
   IN company VARCHAR(50),
   IN employee VARCHAR(10)
 )
