@@ -1,13 +1,18 @@
 import db from '../../database';
 import { getOffset } from '../_utils/';
 
-export const getLogs = (page, { category = 'timestamp', order, time }) => {
+export const getLogs = (
+  page,
+  { category = 'timestamp', order, date, employee = '' }
+) => {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT *
       FROM log
       WHERE
         timestamp < ADDDATE(?, 1)
+        AND
+        employee LIKE ?
       ORDER BY ??
       ${order === 'asc' ? 'ASC' : 'DESC'}
       LIMIT 15 OFFSET ?
@@ -15,7 +20,13 @@ export const getLogs = (page, { category = 'timestamp', order, time }) => {
 
     const CURDATE = { toSqlString: () => 'CURDATE()' };
 
-    const values = [time || CURDATE, category, getOffset(15, page)];
+    const values = [
+      date || CURDATE,
+      `${employee}%`,
+      category,
+      getOffset(15, page)
+    ];
+    console.log(values);
     db.query(query, values, (err, rows) => {
       if (err) {
         console.log(err.message);
@@ -44,27 +55,6 @@ export const getLogById = id => {
       if (!row.length[0]) return reject(404);
 
       return resolve(row[0]);
-    });
-  });
-};
-
-export const getLogByEmployee = employee => {
-  return new Promise((resolve, reject) => {
-    const query = `
-      SELECT *
-      FROM log
-      WHERE employee = ?
-    `;
-
-    db.query(query, [employee], (err, rows) => {
-      if (err) {
-        console.log(err.message);
-        return reject(500);
-      }
-
-      if (!rows.length) return reject(404);
-
-      return resolve(rows);
     });
   });
 };

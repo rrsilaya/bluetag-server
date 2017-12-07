@@ -3,7 +3,7 @@ import db from '../../database';
 
 export const getOrderRequest = (
   page,
-  { category = 'timestamp', order, filter = '%' }
+  { category = 'timestamp', order, filter = '' }
 ) => {
   return new Promise((resolve, reject) => {
     const query = `
@@ -19,7 +19,7 @@ export const getOrderRequest = (
       LIMIT ? OFFSET ?
     `;
 
-    const values = [filter, category, 15, getOffset(15, page)];
+    const values = [`${filter}%`, category, 15, getOffset(15, page)];
     db.query(query, values, (err, rows) => {
       if (err) {
         console.log(err.message);

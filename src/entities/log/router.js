@@ -54,29 +54,4 @@ router.get('/api/log/:id', async (req, res) => {
   }
 });
 
-router.get('/api/logs/employee/:username', async (req, res) => {
-  try {
-    const logs = await Ctrl.getLogByEmployee(req.params.username);
-
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully fetched logs',
-      data: logs
-    });
-  } catch (status) {
-    let message = '';
-
-    switch (status) {
-      case 404:
-        message = 'Logs from employee does not exist';
-        break;
-      case 500:
-        message = 'Internal server error while getting log';
-        break;
-    }
-
-    res.status(status).json({ status, message });
-  }
-});
-
 export default router;
