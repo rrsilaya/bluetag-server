@@ -1,12 +1,12 @@
 -- On Addition
-DROP TRIGGER IF EXISTS newApparel_log;
+DROP TRIGGER IF EXISTS newOrder_log;
 DELIMITER $$
-CREATE TRIGGER newApparel_log
-AFTER INSERT ON apparel
+CREATE TRIGGER newOrder_log
+AFTER INSERT ON orderRequest
 FOR EACH ROW
   BEGIN
     CALL log(
-      'add_apparel',
+      'add_order',
       NEW.id,
       NEW.employee
     );
@@ -15,14 +15,14 @@ $$
 DELIMITER ;
 
 -- On Delete
-DROP TRIGGER IF EXISTS removeApparel_log;
+DROP TRIGGER IF EXISTS removeOrder_log;
 DELIMITER $$
-CREATE TRIGGER removeApparel_log
-BEFORE DELETE ON apparel
+CREATE TRIGGER removeOrder_log
+BEFORE DELETE ON orderRequest
 FOR EACH ROW
   BEGIN
     CALL log(
-      'remove_apparel',
+      'remove_order',
       OLD.id,
       OLD.employee
     );
@@ -31,14 +31,14 @@ $$
 DELIMITER ;
 
 -- On Edit
-DROP TRIGGER IF EXISTS editApparel_log;
+DROP TRIGGER IF EXISTS editOrder_log;
 DELIMITER $$
-CREATE TRIGGER editApparel_log
-AFTER UPDATE ON apparel
+CREATE TRIGGER editOrder_log
+AFTER UPDATE ON orderRequest
 FOR EACH ROW
   BEGIN
     CALL log(
-      'edit_apparel',
+      'edit_order',
       OLD.id,
       NEW.employee
     );
