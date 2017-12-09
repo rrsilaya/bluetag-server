@@ -59,7 +59,7 @@ export const getOrderRequestById = id => {
 export const addOrderRequest = (employee, { company }) => {
   return new Promise((resolve, reject) => {
     const query = `
-      CALL addOrder(SHORT_UUID(), ?, ?)
+      CALL addOrder(UUID_SHORT(), ?, ?)
     `;
 
     const values = [company, employee];

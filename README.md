@@ -12,7 +12,7 @@
   <img src="https://img.shields.io/badge/MariaDB-v10.1.28-green.svg" />
   <br/>
 </h1>
-<h4 align="center">An open source retail shop monitoring system</h4>
+<h4 align="center">A retail shop monitoring system</h4>
 
 ## Installation
 1. Clone this repository.
@@ -20,6 +20,11 @@
 3. Run `yarn seed` to setup the database and `yarn populate` to populate with seed data. You will be prompted twice for your password.
 4. Run the server using `yarn start`.
 5. Access the API at `http://localhost:3001/api`.
+
+If you use `npm`, run:
+```bash
+npm install && npm run seed && npm run populate && npm start
+```
 
 ## Available Routes
 API root route is at `/api`.
